@@ -36,9 +36,11 @@ class MetaModel(Model):
     def as_avatar(self):
         """Return object as Image url instead of __str__"""
         avatar = getattr(self, str(self.Metadata.avatar_field), None)
-        if not self.Metadata.avatar_field or not avatar:
-            return f"/static/media/svg/shapes/abstract-{randint(1, 10)}.svg"
-        return getattr(avatar, "url")
+        return (
+            f"/static/media/svg/shapes/abstract-{randint(1, 10)}.svg"
+            if not avatar
+            else getattr(avatar, "url")
+        )
 
     @property
     def as_name(self):
@@ -55,7 +57,7 @@ class MetaModel(Model):
     @property
     def as_choice(self):
         """Render object as image and name in choice"""
-        image = f"<img class='rounded-circle me-2' src='{self.as_avatar}' style='width: 26px;'>"
+        image = "<img class='rounded-circle me-2' src='{self.as_avatar}' style='width: 26px;'>"
         return f"<span>{image}{self.as_name}</span>"
 
     @property
@@ -69,7 +71,8 @@ class MetaModel(Model):
             + f'<img alt="{self.as_name}" src="{self.as_avatar}">'
             + "</div>"
             + '<div class="d-flex justify-content-start flex-column">'
-            + f'<a href="#" class="text-dark fw-bolder text-hover-primary mb-1 fs-6">{self.as_name}</a>'
+            + '<a href="#" class="text-dark fw-bolder text-hover-primary '
+            + f'mb-1 fs-6">{self.as_name}</a>'
             + f'<span class="text-muted fw-bold text-muted d-block fs-7">{self.as_title}</span>'
             + "</div>"
             + "</div>"
