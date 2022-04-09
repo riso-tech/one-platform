@@ -29,7 +29,6 @@ function pathsConfig(appName) {
   return {
     bootstrapSass: `${vendorsRoot}/bootstrap/scss`,
     vendorsJs: [
-      `${vendorsRoot}/jquery/dist/jquery.js`,
       `${vendorsRoot}/dropify/dist/js/dropify.js`,
       `${vendorsRoot}/jquery-mask-plugin/dist/jquery.mask.js`,
       `${vendorsRoot}/jquery.json-viewer/json-viewer/jquery.json-viewer.js`,
