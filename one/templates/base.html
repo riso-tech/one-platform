@@ -10,7 +10,9 @@
     <meta name="author" content="Bin Nguyen">
 
     <link rel="icon" href="{% static 'images/favicons/favicon.ico' %}">
-
+    <link href="{% static 'metronic/plugins/global/plugins.bundle.css' %}"
+        rel="stylesheet" type="text/css"/>
+    <link href="{% static 'metronic/css/style.bundle.css' %}" rel="stylesheet" type="text/css"/>
     {% block css %}
     <!-- Your stuff: Third-party CSS libraries go here -->
 
@@ -20,6 +22,9 @@
     <!-- Le javascript
     ================================================== -->
     {# Placed at the top of the document so pages load faster with defer #}
+    <!--begin::Global Javascript Bundle(used by all pages)-->
+    <script src="{% static 'metronic/plugins/global/plugins.bundle.js' %}"></script>
+    <!--end::Global Javascript Bundle-->
     {% block javascript %}
       <!-- Vendor dependencies bundled as one file-->
       <script defer src="{% static 'js/vendors.js' %}"></script>

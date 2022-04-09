@@ -334,3 +334,4 @@ vendors.js
 *.min.js
 
 /.env
+/one/static/metronic

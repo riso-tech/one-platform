@@ -1,0 +1,3 @@
+[submodule "one/static/metronic"]
+	path = one/static/metronic
+	url = git@github.com:riso-tech/metronic-static.git
