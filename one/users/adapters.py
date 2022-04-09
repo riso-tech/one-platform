@@ -1,3 +1,6 @@
+"""
+Django allauth adapter override
+"""
 from typing import Any
 
 from allauth.account.adapter import DefaultAccountAdapter
@@ -7,10 +10,14 @@ from django.http import HttpRequest
 
 
 class AccountAdapter(DefaultAccountAdapter):
+    """AccountAdapter"""
+
     def is_open_for_signup(self, request: HttpRequest):
         return getattr(settings, "ACCOUNT_ALLOW_REGISTRATION", True)
 
 
 class SocialAccountAdapter(DefaultSocialAccountAdapter):
+    """SocialAccountAdapter"""
+
     def is_open_for_signup(self, request: HttpRequest, sociallogin: Any):
         return getattr(settings, "ACCOUNT_ALLOW_REGISTRATION", True)

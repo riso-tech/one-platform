@@ -1,3 +1,6 @@
+"""
+User Test Factories
+"""
 from typing import Any, Sequence
 
 from django.contrib.auth import get_user_model
@@ -6,6 +9,7 @@ from factory.django import DjangoModelFactory
 
 
 class UserFactory(DjangoModelFactory):
+    """UserFactory"""
 
     username = Faker("user_name")
     email = Faker("email")
@@ -13,6 +17,15 @@ class UserFactory(DjangoModelFactory):
 
     @post_generation
     def password(self, create: bool, extracted: Sequence[Any], **kwargs):
+        """
+        create password
+        :param create:
+        :param extracted:
+        :param kwargs:
+        :return:
+        """
+        # print create
+        # print kwargs
         password = (
             extracted
             if extracted
@@ -28,5 +41,7 @@ class UserFactory(DjangoModelFactory):
         self.set_password(password)
 
     class Meta:
+        """Meta"""
+
         model = get_user_model()
         django_get_or_create = ["username"]

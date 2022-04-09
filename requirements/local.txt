@@ -1,32 +1,32 @@
 -r base.txt
 
-Werkzeug==2.0.2 # https://github.com/pallets/werkzeug
+Werkzeug[watchdog]==2.0.3 # https://github.com/pallets/werkzeug
 ipdb==0.13.9  # https://github.com/gotcha/ipdb
-psycopg2==2.9.2  # https://github.com/psycopg/psycopg2
-watchgod==0.7  # https://github.com/samuelcolvin/watchgod
+psycopg2==2.9.3  # https://github.com/psycopg/psycopg2
+watchgod==0.8.2  # https://github.com/samuelcolvin/watchgod
 
 # Testing
 # ------------------------------------------------------------------------------
-mypy==0.930  # https://github.com/python/mypy
+mypy==0.942  # https://github.com/python/mypy
 django-stubs==1.9.0  # https://github.com/typeddjango/django-stubs
-pytest==6.2.5  # https://github.com/pytest-dev/pytest
+pytest==7.1.1  # https://github.com/pytest-dev/pytest
 pytest-sugar==0.9.4  # https://github.com/Frozenball/pytest-sugar
 djangorestframework-stubs==1.4.0  # https://github.com/typeddjango/djangorestframework-stubs
 
 # Documentation
 # ------------------------------------------------------------------------------
-sphinx==4.3.2  # https://github.com/sphinx-doc/sphinx
+sphinx==4.5.0  # https://github.com/sphinx-doc/sphinx
 sphinx-autobuild==2021.3.14 # https://github.com/GaretJax/sphinx-autobuild
 
 # Code quality
 # ------------------------------------------------------------------------------
 flake8==4.0.1  # https://github.com/PyCQA/flake8
 flake8-isort==4.1.1  # https://github.com/gforcada/flake8-isort
-coverage==6.2  # https://github.com/nedbat/coveragepy
-black==21.12b0  # https://github.com/psf/black
-pylint-django==2.4.4  # https://github.com/PyCQA/pylint-django
+coverage==6.3.2  # https://github.com/nedbat/coveragepy
+black==22.3.0  # https://github.com/psf/black
+pylint-django==2.5.3  # https://github.com/PyCQA/pylint-django
 pylint-celery==0.3  # https://github.com/PyCQA/pylint-celery
-pre-commit==2.16.0  # https://github.com/pre-commit/pre-commit
+pre-commit==2.18.1  # https://github.com/pre-commit/pre-commit
 
 # Django
 # ------------------------------------------------------------------------------

@@ -1,4 +1,16 @@
+"""
+Websocket Application
+"""
+
+
 async def websocket_application(scope, receive, send):
+    """
+    Default Websocket Application
+    :param scope:
+    :param receive:
+    :param send:
+    :return:
+    """
     while True:
         event = await receive()
 

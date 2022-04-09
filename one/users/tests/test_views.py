@@ -1,3 +1,6 @@
+"""
+User Test Views
+"""
 import pytest
 from django.conf import settings
 from django.contrib import messages
@@ -8,7 +11,7 @@ from django.http import HttpRequest, HttpResponseRedirect
 from django.test import RequestFactory
 from django.urls import reverse
 
-from one.users.forms import UserChangeForm
+from one.users.forms import UserAdminChangeForm
 from one.users.models import User
 from one.users.tests.factories import UserFactory
 from one.users.views import UserRedirectView, UserUpdateView, user_detail_view
@@ -18,7 +21,7 @@ pytestmark = pytest.mark.django_db
 
 class TestUserUpdateView:
     """
-    TODO:
+    NOTE:
         extracting view initialization code as class-scoped fixture
         would be great if only pytest-django supported non-function-scoped
         fixture db access -- this is a work-in-progress for now:
@@ -26,9 +29,11 @@ class TestUserUpdateView:
     """
 
     def dummy_get_response(self, request: HttpRequest):
+        """dummy_get_response"""
         return None
 
     def test_get_success_url(self, user: User, rf: RequestFactory):
+        """test_get_success_url"""
         view = UserUpdateView()
         request = rf.get("/fake-url/")
         request.user = user
@@ -38,6 +43,7 @@ class TestUserUpdateView:
         assert view.get_success_url() == f"/users/{user.username}/"
 
     def test_get_object(self, user: User, rf: RequestFactory):
+        """test_get_object"""
         view = UserUpdateView()
         request = rf.get("/fake-url/")
         request.user = user
@@ -47,6 +53,7 @@ class TestUserUpdateView:
         assert view.get_object() == user
 
     def test_form_valid(self, user: User, rf: RequestFactory):
+        """test_form_valid"""
         view = UserUpdateView()
         request = rf.get("/fake-url/")
 
@@ -58,7 +65,7 @@ class TestUserUpdateView:
         view.request = request
 
         # Initialize the form
-        form = UserChangeForm()
+        form = UserAdminChangeForm()
         form.cleaned_data = []
         view.form_valid(form)
 
@@ -67,7 +74,10 @@ class TestUserUpdateView:
 
 
 class TestUserRedirectView:
+    """TestUserRedirectView"""
+
     def test_get_redirect_url(self, user: User, rf: RequestFactory):
+        """test_get_redirect_url"""
         view = UserRedirectView()
         request = rf.get("/fake-url")
         request.user = user
@@ -78,7 +88,10 @@ class TestUserRedirectView:
 
 
 class TestUserDetailView:
+    """TestUserDetailView"""
+
     def test_authenticated(self, user: User, rf: RequestFactory):
+        """test_authenticated"""
         request = rf.get("/fake-url/")
         request.user = UserFactory()
 
@@ -87,6 +100,7 @@ class TestUserDetailView:
         assert response.status_code == 200
 
     def test_not_authenticated(self, user: User, rf: RequestFactory):
+        """test_not_authenticated"""
         request = rf.get("/fake-url/")
         request.user = AnonymousUser()
 

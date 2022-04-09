@@ -1,3 +1,4 @@
+"""
 # Configuration file for the Sphinx documentation builder.
 #
 # This file only contains a selection of the most common options. For a full
@@ -9,12 +10,13 @@
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-
+"""
 import os
 import sys
+
 import django
 
-if os.getenv("READTHEDOCS", default=False) == "True":
+if os.getenv("READTHEDOCS", default="False") == "True":
     sys.path.insert(0, os.path.abspath(".."))
     os.environ["DJANGO_READ_DOT_ENV_FILE"] = "True"
     os.environ["USE_DOCKER"] = "no"
@@ -26,11 +28,12 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.local")
 django.setup()
 
 # -- Project information -----------------------------------------------------
-
+# noinspection name
 project = "Riso Tech one platform"
-copyright = """2021, Bin Nguyen"""
+# noinspection name
+copyright = """2022, Bin Nguyen"""
+# noinspection name
 author = "Bin Nguyen"
-
 
 # -- General configuration ---------------------------------------------------
 
@@ -55,6 +58,7 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
+# noinspection name
 html_theme = "alabaster"
 
 # Add any paths that contain custom static files (such as style sheets) here,

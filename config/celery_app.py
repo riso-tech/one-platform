@@ -1,3 +1,6 @@
+"""
+Celery Application
+"""
 import os
 
 from celery import Celery

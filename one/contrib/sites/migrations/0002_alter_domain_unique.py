@@ -1,8 +1,12 @@
-import django.contrib.sites.models
+"""
+Override django site model
+"""
+from django.contrib.sites.models import _simple_domain_name_validator
 from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
+    """Migration"""
 
     dependencies = [("sites", "0001_initial")]
 
@@ -13,7 +17,7 @@ class Migration(migrations.Migration):
             field=models.CharField(
                 max_length=100,
                 unique=True,
-                validators=[django.contrib.sites.models._simple_domain_name_validator],
+                validators=[_simple_domain_name_validator],
                 verbose_name="domain name",
             ),
         )
