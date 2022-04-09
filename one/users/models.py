@@ -64,10 +64,17 @@ class User(AbstractUser):
     @property
     def is_online_dot(self):
         """Is online red dot/ blue dot"""
-        if self.is_online:
-            return """<div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle
-                      border border-4 border-white h-20px w-20px"></div>"""
-        return """<div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-danger rounded-circle
-                  border border-4 border-white h-20px w-20px"></div>"""
+        online = (
+            '<div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success'
+            + ' rounded-circle border border-4 border-white h-20px w-20px"></div>'
+        )
 
-    # End User Online Status
+        offline = (
+            '<div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-danger'
+            + ' rounded-circle border border-4 border-white h-20px w-20px"></div>'
+        )
+
+        return online if self.is_online else offline
+
+
+# End User Online Status

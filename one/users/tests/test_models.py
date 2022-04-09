@@ -54,8 +54,15 @@ def test_user_is_online(user: User):
 
 def test_user_is_online_dot(user: User):
     """test_user_is_online_dot"""
-    offline = """<div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-danger rounded-circle
-                  border border-4 border-white h-20px w-20px"></div>"""
+    online = (
+        '<div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success'
+        + ' rounded-circle border border-4 border-white h-20px w-20px"></div>'
+    )
+
+    offline = (
+        '<div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-danger'
+        + ' rounded-circle border border-4 border-white h-20px w-20px"></div>'
+    )
 
     assert user.is_online_dot == offline
 
@@ -65,7 +72,5 @@ def test_user_is_online_dot(user: User):
         now,
         settings.USER_LASTSEEN_TIMEOUT,
     )
-    online = """<div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle
-                      border border-4 border-white h-20px w-20px"></div>"""
 
     assert user.is_online_dot == online
