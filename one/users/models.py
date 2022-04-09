@@ -11,8 +11,10 @@ from django.db.models import CharField, UUIDField
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
+from one.components.models import MetaModel
 
-class User(AbstractUser):
+
+class User(MetaModel, AbstractUser):
     """
     Default custom user model for Riso Tech one platform.
     If adding fields that need to be filled at user signup,
@@ -76,5 +78,4 @@ class User(AbstractUser):
 
         return online if self.is_online else offline
 
-
-# End User Online Status
+    # End User Online Status

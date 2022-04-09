@@ -4,6 +4,7 @@ Base settings to build other settings files upon.
 from pathlib import Path
 
 import environ
+from django.utils.translation import gettext_lazy as _
 
 ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 # one/
@@ -25,6 +26,12 @@ DEBUG = env.bool("DJANGO_DEBUG", False)
 # In Windows, this must be set to your system time zone.
 TIME_ZONE = "Asia/Ho_Chi_Minh"
 # https://docs.djangoproject.com/en/dev/ref/settings/#language-code
+VIETNAMESE = "vi"
+ENGLISH = "en"
+LANGUAGES = [
+    (VIETNAMESE, _("Vietnamese")),
+    (ENGLISH, _("English")),
+]
 LANGUAGE_CODE = "en-us"
 # https://docs.djangoproject.com/en/dev/ref/settings/#site-id
 SITE_ID = 1

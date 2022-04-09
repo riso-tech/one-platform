@@ -74,3 +74,28 @@ def test_user_is_online_dot(user: User):
     )
 
     assert user.is_online_dot == online
+
+
+def test_user_as_avatar(user: User):
+    """test_user_as_avatar"""
+    assert "/static/media/svg/" in user.as_avatar
+
+
+def test_user_as_name(user: User):
+    """test_user_as_name"""
+    assert user.as_name is not None
+
+
+def test_user_as_title(user: User):
+    """test_user_as_title"""
+    assert user.as_title is not None
+
+
+def test_user_as_choice(user: User):
+    """test_user_as_choice"""
+    assert user.as_choice is not None
+
+
+def test_user_as_cell(user: User):
+    """test_user_as_cell"""
+    assert user.as_cell is not None
