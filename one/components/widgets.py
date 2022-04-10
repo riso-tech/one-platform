@@ -9,9 +9,7 @@ class LabelModelChoiceField(ModelChoiceField):
 
     def label_from_instance(self, obj):
         """:return choice in html or string"""
-        if hasattr(obj, "display_choice_html"):
-            return obj.display_choice_html
-        return str(obj)
+        return obj.as_choice if hasattr(obj, "as_choice") else str(obj)
 
 
 class LabelModelMultipleChoiceField(LabelModelChoiceField, ModelMultipleChoiceField):

@@ -52,6 +52,17 @@ class TestUserUpdateView:
 
         assert view.get_object() == user
 
+    def test_get_context_data(self, user: User, rf: RequestFactory):
+        """test_get_context_data"""
+        view = UserUpdateView()
+        request = rf.get("/fake-url/")
+        request.user = user
+
+        view.request = request
+        view.object = view.get_object()
+        assert "breadcrumb" in view.get_context_data()
+        assert "layout" in view.get_context_data()
+
     def test_form_valid(self, user: User, rf: RequestFactory):
         """test_form_valid"""
         view = UserUpdateView()
