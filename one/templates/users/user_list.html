@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}User: {{ object.username }}{% endblock %}
+
+{% block content %}
+  <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4" id="table_fields">
+    <!--begin::Table head-->
+    <thead>
+    <tr class="fw-bolder text-muted">
+      {% for item in fields %}
+        <th>{{ item.verbose }}</th>
+      {% endfor %}
+    </tr>
+    </thead>
+    <!--end::Table head-->
+    <!--begin::Table body-->
+    <tbody>
+    </tbody>
+    <!--end::Table body-->
+  </table>
+{% endblock content %}
+{% block inline_javascript %}
+  <script>
+
+  </script>
+{% endblock inline_javascript %}

@@ -1,0 +1,111 @@
+{% load i18n static %}
+<div class="d-block">
+{% if widget.is_initial %}
+  <!--begin::Image input-->
+  <div class="image-input image-input-outline" data-kt-image-input="true"
+       style="background-image: url({% static 'media/svg/avatars/blank.svg' %})">
+    <!--begin::Image preview wrapper-->
+    <div class="image-input-wrapper w-100px h-100px"
+         style="background-image: url({{ widget.value.url }})"></div>
+    <!--end::Image preview wrapper-->
+
+    <!--begin::Edit button-->
+    <label
+      class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+      data-kt-image-input-action="change"
+      data-bs-toggle="tooltip"
+      data-bs-dismiss="click"
+      title="{% translate 'Change image' %}">
+      <i class="bi bi-pencil-fill fs-7"></i>
+
+      <!--begin::Inputs-->
+      <input
+        type="{{ widget.type }}"
+        name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %}>
+      {% if not widget.required %}
+        <input type="hidden" name="{{ widget.checkbox_name }}"
+               id="{{ widget.checkbox_id }}">
+      {% endif %}
+      <!--end::Inputs-->
+    </label>
+    <!--end::Edit button-->
+
+    <!--begin::Cancel button-->
+    <span
+      class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+      data-kt-image-input-action="cancel"
+      data-bs-toggle="tooltip"
+      data-bs-dismiss="click"
+      title="{% translate 'Cancel image' %}">
+         <i class="bi bi-x fs-2"></i>
+     </span>
+    <!--end::Cancel button-->
+
+    <!--begin::Remove button-->
+    <span
+      class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+      data-kt-image-input-action="remove"
+      data-bs-toggle="tooltip"
+      data-bs-dismiss="click"
+      title="{% translate 'Remove image' %}">
+         <i class="bi bi-x fs-2"></i>
+     </span>
+    <!--end::Remove button-->
+  </div>
+  <!--end::Image input-->
+{% else %}
+  <!--begin::Image input-->
+  <div class="image-input image-input-empty" data-kt-image-input="true"
+       style="background-image: url({% static 'media/svg/avatars/blank.svg' %})">
+    <!--begin::Image preview wrapper-->
+    <div class="image-input-wrapper w-100px h-100px"></div>
+    <!--end::Image preview wrapper-->
+
+    <!--begin::Edit button-->
+    <label
+      class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+      data-kt-image-input-action="change"
+      data-bs-toggle="tooltip"
+      data-bs-dismiss="click"
+      title="{% translate 'Change image' %}">
+      <i class="bi bi-pencil-fill fs-7"></i>
+
+      <!--begin::Inputs-->
+      <input
+        type="{{ widget.type }}"
+        name="{{ widget.name }}"
+        {% if widget.value != None %}
+        value="{{ widget.value|stringformat:'s' }}"{% endif %}
+        {% include "django/forms/widgets/attrs.html" %}>
+
+      <input type="hidden" name="avatar_remove"/>
+      <!--end::Inputs-->
+    </label>
+    <!--end::Edit button-->
+
+    <!--begin::Cancel button-->
+    <span
+      class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+      data-kt-image-input-action="cancel"
+      data-bs-toggle="tooltip"
+      data-bs-dismiss="click"
+      title="{% translate 'Cancel image' %}">
+         <i class="bi bi-x fs-2"></i>
+     </span>
+    <!--end::Cancel button-->
+
+    <!--begin::Remove button-->
+    <span
+      class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-white shadow"
+      data-kt-image-input-action="remove"
+      data-bs-toggle="tooltip"
+      data-bs-dismiss="click"
+      title="{% translate 'Remove image' %}">
+         <i class="bi bi-x fs-2"></i>
+     </span>
+    <!--end::Remove button-->
+  </div>
+
+  <!--end::Image input-->
+{% endif %}
+</div>

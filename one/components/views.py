@@ -162,6 +162,7 @@ class ExposeDetailView(ExtendView, DetailView):
                 "col": item.name,
                 "verbose": item.verbose_name,
                 "value": str(self.get_field_value(self.object, item.name)),
+                "type": str(type(item)),
             }
             for item in fields
         ]

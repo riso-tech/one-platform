@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}User: {{ object.username }}{% endblock %}
+
+{% block content %}
+  <!--begin::Container-->
+  {% include 'users/partials/user_card.html' with user=request.user %}
+  <!--begin::Basic info-->
+  <div class="card mb-5 mb-xl-10">
+    <!--begin::Content-->
+    <div id="kt_account_settings_profile_details"
+         class="collapse show">
+      {% if layout == '1COL' %}
+        {% include 'forms/one-col-form.html' with form=form action_url='.' %}
+      {% else %}
+        {% include 'forms/two-col-form.html' with form=form action_url='.' %}
+      {% endif %}
+    </div>
+    <!--end::Content-->
+  </div>
+  <!--end::Basic info-->
+  <!--end::Container-->
+{% endblock content %}

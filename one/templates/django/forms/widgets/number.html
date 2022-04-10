@@ -1,0 +1,10 @@
+{% load i18n static %}
+<script src="{% static 'js/plugins/maskjs/dist/jquery.mask.min.js' %}"></script>
+<input
+  type="text"
+  name="{{ widget.name }}"{% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}
+  {% include "django/forms/widgets/attrs.html" %}>
+
+<script defer>
+  $("#{% for name, value in widget.attrs.items %}{% if name == 'id' %}{{ value|stringformat:'s' }}{% endif %}{% endfor %}").mask('000.000.000.000.000,00', {reverse: true});
+</script>

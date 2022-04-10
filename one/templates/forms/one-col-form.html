@@ -1,0 +1,41 @@
+{% load i18n %}
+<!--begin::Form-->
+<form id="kt_account_profile_details_form"
+      class="form" method="post" enctype="multipart/form-data"
+      action={{ action_url }}>
+  {% csrf_token %}
+  <!--begin::Card body-->
+  <div class="card-body border-top p-9">
+    {% for field in form %}
+      <!--begin::Input group-->
+      <div class="row {% if forloop.last %}mb-0{% else %}mb-6{% endif %}">
+        <!--begin::Label-->
+        <label
+          class="col-lg-4 col-form-label fw-bold fs-6 {% if field.field.required %}required{% endif %}">
+          {{ field.label|title }}</label>
+        <!--end::Label-->
+        <!--begin::Col-->
+        <div class="col-lg-8 fv-row">
+          {{ field }}
+        </div>
+        <!--end::Col-->
+      </div>
+      <!--end::Input group-->
+    {% endfor %}
+  </div>
+  <!--end::Card body-->
+  <!--begin::Actions-->
+  <div class="card-footer d-flex justify-content-end py-6 px-9">
+    <button type="reset"
+            class="btn btn-light btn-active-light-primary me-2">
+      {% translate 'Discard' %}
+    </button>
+    <button type="submit"
+            class="btn btn-primary"
+            id="kt_account_profile_details_submit">
+      {% translate 'Save Changes' %}
+    </button>
+  </div>
+  <!--end::Actions-->
+</form>
+<!--end::Form-->

@@ -1,0 +1,7 @@
+<option
+  value="{{ widget.value|stringformat:'s' }}"
+  {% include "django/forms/widgets/attrs.html" %}
+  inner="{{ widget.label }}"
+>
+  {{ widget.label|safe }}
+</option>

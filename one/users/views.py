@@ -6,12 +6,15 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import DetailView, RedirectView, UpdateView
+from django.views.generic import RedirectView
+
+from one.components.constants import FORM_LAYOUT_2_COL
+from one.components.views import ExposeDetailView, ExposeUpdateView
 
 User = get_user_model()
 
 
-class UserDetailView(LoginRequiredMixin, DetailView):
+class UserDetailView(LoginRequiredMixin, ExposeDetailView):
     """UserDetailView"""
 
     model = User
@@ -22,12 +25,14 @@ class UserDetailView(LoginRequiredMixin, DetailView):
 user_detail_view = UserDetailView.as_view()
 
 
-class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, ExposeUpdateView):
     """UserUpdateView"""
 
     model = User
-    fields = ["name"]
+    fields = ["username", "name"]
     success_message = _("Information successfully updated")
+    layout = FORM_LAYOUT_2_COL
+    read_only_fields = ["username"]
 
     def get_success_url(self):
         """get_success_url"""

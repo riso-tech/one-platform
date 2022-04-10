@@ -34,6 +34,14 @@
   <!--begin::Global Javascript Bundle(used by all pages)-->
   <script src="{% static 'metronic/plugins/global/plugins.bundle.js' %}"></script>
   <!--end::Global Javascript Bundle-->
+  <!--begin::Global Javascript Bundle(used by all pages)-->
+  <script src="{% static 'metronic/js/scripts.bundle.js' %}"></script>
+  <!-- Vendor dependencies bundled as one file-->
+  <script src="{% static 'js/vendors.min.js' %}"></script>
+  <!-- place project specific Javascript in this file -->
+  <script src="{% static 'js/project.min.js' %}"></script>
+  <!--end::Global Javascript Bundle-->
+
 </head>
 <!--end::Head-->
 <!--begin::Body-->
@@ -173,13 +181,6 @@
 <!--end::hidden form-->
 
 <!--begin::Javascript-->
-  <!--begin::Global Javascript Bundle(used by all pages)-->
-  <script src="{% static 'metronic/js/scripts.bundle.js' %}"></script>
-  <!--end::Global Javascript Bundle-->
-  <!-- Vendor dependencies bundled as one file-->
-  <script src="{% static 'js/vendors.min.js' %}"></script>
-  <!-- place project specific Javascript in this file -->
-  <script src="{% static 'js/project.min.js' %}"></script>
   {% block inline_javascript %}
     <!--begin::Page Custom Javascript(used by this page)-->
     <!--end::Page Custom Javascript-->

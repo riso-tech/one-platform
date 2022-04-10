@@ -1,0 +1,14 @@
+<input
+  type="{{ widget.type }}"
+  name="{{ widget.name }}"{% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}
+  {% include "django/forms/widgets/attrs.html" %}>
+{% for name, value in widget.attrs.items %}
+  {% if name == 'maxlength' %}
+    <script defer>
+    $("#{% for name, value in widget.attrs.items %}{% if name == 'id' %}{{ value|stringformat:'s' }}{% endif %}{% endfor %}").maxlength({
+        warningClass: "badge badge-warning",
+        limitReachedClass: "badge badge-success"
+    });
+    </script>
+  {% endif %}
+{% endfor %}

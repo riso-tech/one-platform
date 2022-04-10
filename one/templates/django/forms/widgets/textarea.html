@@ -1,0 +1,14 @@
+{% load static %}
+{% if widget.attrs.input_type == 'TEXT' %}
+<script src="{% static 'plugins/custom/tinymce/tinymce.bundle.js' %}"></script>
+{% endif %}
+
+<textarea name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %}>
+{% if widget.value %}{{ widget.value }}{% endif %}</textarea>
+
+{% if widget.attrs.input_type == 'TEXT' %}
+<script defer>
+  let selector = "#{% for name, value in widget.attrs.items %}{% if name == 'id' %}{{ value|stringformat:'s' }}{% endif %}{% endfor %}";
+  tinymce.init({selector: selector});
+</script>
+{% endif %}

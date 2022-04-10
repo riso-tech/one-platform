@@ -1,0 +1,40 @@
+{% load i18n %}
+<!--begin::Form-->
+<form id="kt_account_profile_details_form"
+      class="form fv-plugins-bootstrap5 fv-plugins-framework"
+      method="post" enctype="multipart/form-data" action={{ action_url }}>
+  {% csrf_token %}
+  <!--begin::Card body-->
+  <div class="card-body border-top p-9">
+    <!--begin::Input group-->
+    <div class="row g-9 mb-8">
+      {% for field in form %}
+      <!--begin::Col-->
+      <div class="col-md-6 fv-row {% if forloop.last %}{% else %}fv-plugins-icon-container{% endif %}">
+        <label class="{% if field.field.required %}required{% endif %} fs-6 fw-bold mb-2">{{ field.label|title }}</label>
+        {{ field }}
+        <div class="fv-plugins-message-container valid-feedback">{{ field.help_text }}</div>
+        <div class="fv-plugins-message-container invalid-feedback">{{ field.errors.as_text }}</div>
+      </div>
+      <!--end::Col-->
+      {% endfor %}
+    </div>
+    <!--end::Input group-->
+
+  </div>
+  <!--end::Card body-->
+  <!--begin::Actions-->
+  <div class="card-footer d-flex justify-content-end py-6 px-9">
+    <button type="reset"
+            class="btn btn-light btn-active-light-primary me-2">
+      {% translate 'Discard' %}
+    </button>
+    <button type="submit"
+            class="btn btn-primary"
+            id="kt_account_profile_details_submit">
+      {% translate 'Save Changes' %}
+    </button>
+  </div>
+  <!--end::Actions-->
+</form>
+<!--end::Form-->

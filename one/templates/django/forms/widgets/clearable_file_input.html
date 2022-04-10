@@ -1,0 +1,13 @@
+{% load i18n static %}
+
+{% if widget.attrs.input_type == 'FILE' %}
+
+  {% include "django/forms/widgets/modern_file.html" %}
+
+{% elif widget.attrs.input_type == 'IMAGE' %}
+
+  {% include 'django/forms/widgets/image.html' %}
+
+{% else %}
+  {% include "django/forms/widgets/input.html" %}
+{% endif %}

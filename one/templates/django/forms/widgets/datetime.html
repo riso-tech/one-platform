@@ -1,0 +1,6 @@
+{% include "django/forms/widgets/input.html" %}
+<script defer>
+  $("#{% for name, value in widget.attrs.items %}{% if name == 'id' %}{{ value|stringformat:'s' }}{% endif %}{% endfor %}").flatpickr(
+    {enableTime: true}
+  );
+</script>
