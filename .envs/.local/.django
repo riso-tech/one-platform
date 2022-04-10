@@ -12,3 +12,10 @@ REDIS_URL=redis://redis:6379/0
 # Flower
 CELERY_FLOWER_USER=user
 CELERY_FLOWER_PASSWORD=password
+
+
+# django-webpush
+# ------------------------------------------------------------------------------
+VAPID_PUBLIC_KEY=BEoGD6DG964hJEgzD4swEbhlkAG5qXE34sJ1oUd6yYCzlk06AXOwG6_2C_dy_wzyemi3UwAw74K6IMwCdXJIo50
+VAPID_PRIVATE_KEY=usGrKM89fvTCjC0dYlb5Ra7BMmvVWxeVW9jYVWfDQJo
+VAPID_ADMIN_EMAIL=bin.ngoctu@gmail.com
