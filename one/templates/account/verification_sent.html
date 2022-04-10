@@ -1,0 +1,18 @@
+{% extends "account/base-col-1.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% translate "Verify Your E-mail Address" %}{% endblock %}
+
+{% block inner %}
+<!--begin::Wrapper-->
+<div class="pt-lg-10 mb-10">
+  <!--begin::Logo-->
+  <h1 class="fw-bolder fs-2qx text-gray-800 mb-7">{% translate "Verify Your E-mail Address" %}</h1>
+  <!--end::Logo-->
+  <!--begin::Message-->
+  <div class="fw-bold fs-3 text-muted mb-15">{% blocktranslate %}We have sent an e-mail to you for verification. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes.{% endblocktranslate %}</div>
+  <!--end::Message-->
+</div>
+<!--end::Wrapper-->
+{% endblock %}

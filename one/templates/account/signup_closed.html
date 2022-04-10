@@ -1,0 +1,18 @@
+{% extends "account/base-col-1.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% translate "Sign Up Closed" %}{% endblock %}
+
+{% block inner %}
+<!--begin::Wrapper-->
+  <div class="pt-lg-10 mb-10">
+    <!--begin::Logo-->
+    <h1 class="fw-bolder fs-2qx text-gray-800 mb-7">{% translate "Sign Up Closed" %}</h1>
+    <!--end::Logo-->
+    <!--begin::Message-->
+    <div class="fw-bold fs-3 text-muted mb-15">{% translate "We are sorry, but the sign up is currently closed." %}</div>
+    <!--end::Message-->
+  </div>
+<!--end::Wrapper-->
+{% endblock %}

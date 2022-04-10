@@ -1,0 +1,8 @@
+{% load i18n %}
+{% load account %}
+
+{% user_display user as user_display %}
+<!--begin::Link-->
+<div class="text-red-400 fw-bold fs-4"><strong>{% trans "Note" %}:</strong> {% blocktranslate %}You are already logged in as {{ user_display }}.{% endblocktranslate %}
+</div>
+<!--end::Link-->

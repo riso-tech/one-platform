@@ -1,0 +1,24 @@
+{% extends "account/base-col-1.html" %}
+
+{% load static i18n %}
+
+{% block head_title %}{% translate "Account Inactive" %}{% endblock %}
+
+{% block inner %}
+<!--begin::Wrapper-->
+  <div class="pt-lg-10 mb-10">
+    <!--begin::Logo-->
+    <h1 class="fw-bolder fs-2qx text-gray-800 mb-7">{% translate "Your account is deactivated" %}</h1>
+    <!--end::Logo-->
+    <!--begin::Message-->
+    <div class="fw-bold fs-3 text-muted mb-15">{% blocktranslate %}Plan your blog post by choosing a topic creating
+    <br />an outline and checking facts{% endblocktranslate %}.</div>
+    <!--end::Message-->
+    <!--begin::Action-->
+    <div class="text-center">
+      <a href="/" class="btn btn-lg btn-primary fw-bolder">{% translate "Go to homepage" %}</a>
+    </div>
+    <!--end::Action-->
+  </div>
+<!--end::Wrapper-->
+{% endblock %}

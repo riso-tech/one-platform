@@ -1,0 +1,31 @@
+{% extends "account/base-col-1.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% translate "Sign Out" %}{% endblock %}
+
+{% block inner %}
+<!--begin::Wrapper-->
+<div class="pt-lg-10 mb-10">
+  <!--begin::Logo-->
+  <h1 class="fw-bolder fs-2qx text-gray-800 mb-7">{% translate "Sign Out" %}</h1>
+  <!--end::Logo-->
+  <!--begin::Message-->
+  <div class="fw-bold fs-3 text-muted mb-15">{% translate 'Are you sure you want to sign out' %}?</div>
+  <!--end::Message-->
+  <!--begin::Action-->
+  <form method="post" action="{% url 'account_logout' %}">
+    {% csrf_token %}
+    {% if redirect_field_value %}
+    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+    {% endif %}
+    <div class="text-center">
+      <button class="btn btn-lg btn-primary fw-bolder" type="submit">{% translate 'Sign Out' %}</button>
+    </div>
+  </form>
+  <!--end::Action-->
+</div>
+<!--end::Wrapper-->
+
+
+{% endblock %}

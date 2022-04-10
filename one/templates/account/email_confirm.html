@@ -1,0 +1,40 @@
+{% extends "account/base-col-1.html" %}
+
+{% load static i18n %}
+{% load account %}
+
+{% block head_title %}{% translate "Account Inactive" %}{% endblock %}
+
+{% block inner %}
+  <!--begin::Wrapper-->
+  <div class="pt-lg-10 mb-10">
+    <!--begin::Logo-->
+    <h1 class="fw-bolder fs-2qx text-gray-800 mb-7">{% translate "Verify Your Email" %}</h1>
+    <!--end::Logo-->
+    {% if confirmation %}
+    {% user_display confirmation.email_address.user as user_display %}
+    <!--begin::Message-->
+    <div class="fs-3 fw-bold text-muted mb-10">{% blocktranslate with confirmation.email_address.email as email %}We have sent an email to
+    <a href="mailto:{{ email }}" class="link-primary fw-bolder">{{ email }}</a>
+    <br />please follow a link to verify your email.{% endblocktranslate %}</div>
+    <!--end::Message-->
+    <!--begin::Action-->
+    <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+      {% csrf_token %}
+      <div class="text-center mb-10">
+        <button class="btn btn-lg btn-primary fw-bolder" type="submit">{% translate 'Confirm' %}</button>
+      </div>
+    </form>
+
+    <!--end::Action-->
+    {% else %}
+      {% url 'account_email' as email_url %}
+      <!--begin::Message-->
+      <div class="fs-3 fw-bold text-muted mb-10">{% blocktranslate %}This e-mail confirmation link expired or is invalid. Please
+      <a href="{{ email_url }}" class="link-primary fw-bolder">issue a new e-mail confirmation request</a>.{% endblocktranslate %}</div>
+      <!--end::Message-->
+    {% endif %}
+  </div>
+  <!--end::Wrapper-->
+
+{% endblock %}

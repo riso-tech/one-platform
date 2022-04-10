@@ -1,0 +1,85 @@
+{% load static i18n %}<!DOCTYPE html>
+<html lang="en">
+	<!--begin::Head-->
+	<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+		<title>{% block title %}{% endblock title %}</title>
+		<meta name="description" content="{% block description %}{% endblock description %}" />
+		<meta name="keywords" content="{% block keywords %}{% endblock keywords %}" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta property="og:locale" content="en_US" />
+		<meta property="og:type" content="{% block og_type %}{% endblock og_type %}" />
+		<meta property="og:title" content="{% block og_title %}{% endblock og_title %}" />
+		<meta property="og:url" content="https://example.com" />
+		<meta property="og:site_name" content="example.com" />
+		<link rel="canonical" href="https://example.com" />
+		<link rel="shortcut icon" href="{% static 'metronic/media/logos/favicon.ico' %}" />
+		<!--begin::Fonts-->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+		<!--end::Fonts-->
+    {% block css %}
+		<!--begin::Global Stylesheets Bundle(used by all pages)-->
+		<link href="{% static 'metronic/plugins/global/plugins.bundle.css' %}" rel="stylesheet" type="text/css" />
+		<link href="{% static 'metronic/css/style.bundle.css' %}" rel="stylesheet" type="text/css" />
+		<!--end::Global Stylesheets Bundle-->
+    {% endblock %}
+	</head>
+	<!--end::Head-->
+	<!--begin::Body-->
+	<body id="kt_body" class="bg-body">
+		<!--begin::Main-->
+		{% block content %}{% endblock content %}
+		<!--end::Main-->
+		<!--begin::Javascript-->
+		<!--begin::Global Javascript Bundle(used by all pages)-->
+		<script src="{% static 'metronic/plugins/global/plugins.bundle.js' %}"></script>
+		<script src="{% static 'metronic/js/scripts.bundle.js' %}"></script>
+		<!--end::Global Javascript Bundle-->
+    {% block javascript %}
+    {% endblock javascript %}
+    {% if messages %}
+      {% for message in messages %}
+      <script>
+        // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
+        Swal.fire({
+          text: "{{ message }}!",
+          icon: "{% if message.tags %}{{ message.tags }}{% else %}success{% endif %}",
+          buttonsStyling: false,
+          confirmButtonText: "{% translate 'Ok' %}!",
+          customClass: {
+            confirmButton: "btn btn-primary"
+          }
+        });
+      </script>
+      {% endfor %}
+    {% endif %}
+    {% if form.errors %}
+      <script id="id_form_error" type="application/json">
+        {{ form.errors.as_json }}
+      </script>
+      <script>
+        const form_errors = JSON.parse(document.getElementById('id_form_error').textContent.replaceAll('&quot;', '"'));
+        let html = '<ul class="list-inline">';
+        $.each(form_errors, function (index, value){
+          $.each(value, function (index, _value){
+            html += _value.message;
+          });
+        });
+        html += '</ul>'
+        // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
+        Swal.fire({
+          html: html,
+          icon: "error",
+          buttonsStyling: false,
+          confirmButtonText: "{% translate 'Ok' %}!",
+          customClass: {
+            confirmButton: "btn btn-danger"
+          }
+        });
+      </script>
+    {% endif %}
+		<!--end::Javascript-->
+	</body>
+	<!--end::Body-->
+</html>
