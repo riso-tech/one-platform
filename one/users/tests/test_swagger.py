@@ -17,7 +17,7 @@ def test_swagger_accessible_by_admin(admin_client):
 def test_swagger_ui_not_accessible_by_normal_user(client):
     """test_swagger_ui_not_accessible_by_normal_user"""
     url = reverse("api-docs")
-    response = client.get(url)
+    response = client.get(url, request=[])
     assert response.status_code == 403
 
 

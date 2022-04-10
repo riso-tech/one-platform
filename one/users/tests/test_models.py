@@ -78,7 +78,7 @@ def test_user_is_online_dot(user: User):
 
 def test_user_as_avatar(user: User):
     """test_user_as_avatar"""
-    assert "/static/media/svg/" in user.as_avatar
+    assert "/static/metronic/media/svg/" in user.as_avatar
 
 
 def test_user_as_name(user: User):
