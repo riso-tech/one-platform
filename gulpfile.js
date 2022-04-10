@@ -73,7 +73,7 @@ function styles() {
   return src(`${paths.sass}/project.scss`)
     .pipe(sass({
       includePaths: [
-        paths.bootstrapSass,
+        // paths.bootstrapSass,
         paths.sass
       ]
     }).on('error', sass.logError))

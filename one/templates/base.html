@@ -1,114 +1,251 @@
-{% load static i18n %}<!DOCTYPE html>
-{% get_current_language as LANGUAGE_CODE %}
-<html lang="{{ LANGUAGE_CODE }}">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>{% block title %}Riso Tech one platform{% endblock title %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Behold My Awesome Project!">
-    <meta name="author" content="Bin Nguyen">
+{% load static i18n webpush_notifications %}<!DOCTYPE html>
+<html lang="en">
+<!--begin::Head-->
+<head>
+  {% webpush_header %}
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>{% block title %}{% endblock title %}</title>
+  <meta name="description"
+        content="{% block description %}{% endblock description %}"/>
+  <meta name="keywords" content="{% block keywords %}{% endblock keywords %}"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:type"
+        content="{% block og_type %}{% endblock og_type %}"/>
+  <meta property="og:title"
+        content="{% block og_title %}{% endblock og_title %}"/>
+  <meta property="og:url" content="https://example.com"/>
+  <meta property="og:site_name" content="example.com"/>
+  <link rel="canonical" href="https://example.com"/>
+  <link rel="shortcut icon" href="{% static 'metronic/media/logos/favicon.ico' %}"/>
+  <!--begin::Fonts-->
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"/>
+  <!--end::Fonts-->
+  <!--begin::Global Stylesheets Bundle(used by all pages)-->
+  <link href="{% static 'metronic/plugins/global/plugins.bundle.css' %}" rel="stylesheet" type="text/css"/>
+  <link href="{% static 'metronic/css/style.bundle.css' %}" rel="stylesheet" type="text/css"/>
+  <link href="{% static 'css/vendors.min.css' %}" rel="stylesheet" type="text/css" />
+  <!-- This file stores project-specific CSS -->
+  <link href="{% static 'css/project.min.css' %}" rel="stylesheet">
+  <!--end::Global Stylesheets Bundle-->
 
-    <link rel="icon" href="{% static 'images/favicons/favicon.ico' %}">
-    <link href="{% static 'metronic/plugins/global/plugins.bundle.css' %}"
-        rel="stylesheet" type="text/css"/>
-    <link href="{% static 'metronic/css/style.bundle.css' %}" rel="stylesheet" type="text/css"/>
-    {% block css %}
-    <!-- Your stuff: Third-party CSS libraries go here -->
+  <!--begin::Global Javascript Bundle(used by all pages)-->
+  <script src="{% static 'metronic/plugins/global/plugins.bundle.js' %}"></script>
+  <!--end::Global Javascript Bundle-->
+</head>
+<!--end::Head-->
+<!--begin::Body-->
+<body id="kt_body"
+      class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled aside-enabled aside-fixed"
+      style="--kt-toolbar-height:55px;--kt-toolbar-height-tablet-and-mobile:55px">
 
-    <!-- This file stores project-specific CSS -->
-    <link href="{% static 'css/project.min.css' %}" rel="stylesheet">
-    {% endblock %}
-    <!-- Le javascript
-    ================================================== -->
-    {# Placed at the top of the document so pages load faster with defer #}
-    <!--begin::Global Javascript Bundle(used by all pages)-->
-    <script src="{% static 'metronic/plugins/global/plugins.bundle.js' %}"></script>
-    <!--end::Global Javascript Bundle-->
-    {% block javascript %}
-      <!-- Vendor dependencies bundled as one file-->
-      <script defer src="{% static 'js/vendors.js' %}"></script>
+<!--begin::Main-->
+<!--begin::Root-->
+<div class="d-flex flex-column flex-root">
+  <!--begin::Page-->
+  <div class="page d-flex flex-row flex-column-fluid">
 
-      <!-- place project specific Javascript in this file -->
-      <script defer src="{% static 'js/project.min.js' %}"></script>
+    <!--layout-partial:aside/base.html-->
+    {% include 'aside/base.html' %}
 
-    {% endblock javascript %}
+    <!--begin::Wrapper-->
+    <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
 
-  </head>
+      <!--layout-partial:header/base.html-->
+      {% include 'header/base.html' %}
 
-  <body>
+      <!--begin::Content-->
+      <div class="content d-flex flex-column flex-column-fluid"
+           id="kt_content">
 
-    <div class="mb-1">
-      <nav class="navbar navbar-expand-md navbar-light bg-light">
-        <div class="container-fluid">
-          <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <a class="navbar-brand" href="{% url 'home' %}">Riso Tech one platform</a>
+        <!--layout-partial:layout/toolbars/_toolbar-1.html-->
+{#        {% include 'layout/toolbars/_toolbar-1.html' %}#}
 
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="{% url 'home' %}">Home <span class="visually-hidden">(current)</span></a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'about' %}">About</a>
-              </li>
-              {% if request.user.is_authenticated %}
-                <li class="nav-item">
-                  {# URL provided by django-allauth/account/urls.py #}
-                  <a class="nav-link" href="{% url 'users:detail' request.user.username  %}">{% translate "My Profile" %}</a>
-                </li>
-                <li class="nav-item">
-                  {# URL provided by django-allauth/account/urls.py #}
-                  <a class="nav-link" href="{% url 'account_logout' %}">{% translate "Sign Out" %}</a>
-                </li>
-              {% else %}
-                {% if ACCOUNT_ALLOW_REGISTRATION %}
-              <li class="nav-item">
-                {# URL provided by django-allauth/account/urls.py #}
-                <a id="sign-up-link" class="nav-link" href="{% url 'account_signup' %}">{% translate "Sign Up" %}</a>
-              </li>
-              {% endif %}
-                <li class="nav-item">
-                  {# URL provided by django-allauth/account/urls.py #}
-                  <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}">{% translate "Sign In" %}</a>
-                </li>
-              {% endif %}
-            </ul>
+        <!--begin::Post-->
+        <div class="post d-flex flex-column-fluid" id="">
+          <div id="kt_content_container" class="container-xxl">
+          {% if warning %}
+            <!--begin::Notice-->
+            <div class="notice d-flex bg-light-warning rounded border-warning border border-dashed p-6">
+              <!--begin::Icon-->
+              <!--begin::Svg Icon | path: icons/duotune/general/gen044.svg-->
+              <span class="svg-icon svg-icon-2tx svg-icon-warning me-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black"></rect>
+                  <rect x="11" y="14" width="7" height="2" rx="1" transform="rotate(-90 11 14)" fill="black"></rect>
+                  <rect x="11" y="17" width="2" height="2" rx="1" transform="rotate(-90 11 17)" fill="black"></rect>
+                </svg>
+              </span>
+              <!--end::Svg Icon-->
+              <!--end::Icon-->
+              <!--begin::Wrapper-->
+              <div class="d-flex flex-stack flex-grow-1">
+                <!--begin::Content-->
+                <div class="fw-bold">
+                  <h4 class="text-gray-900 fw-bolder">
+                    {% translate "We need your attention!" %}
+                  </h4>
+                  <div class="fs-6 text-gray-700">
+                    {{ warning|safe }}
+                  </div>
+                </div>
+                <!--end::Content-->
+              </div>
+              <!--end::Wrapper-->
+            </div>
+            <!--end::Notice-->
+          {% endif %}
+          {% block content %}
+          <!--layout-partial:layout/_content.html-->
+          {% endblock content %}
+
           </div>
         </div>
-      </nav>
+        <!--end::Post-->
+      </div>
+      <!--end::Content-->
+
+      <!--layout-partial:layout/_footer.html-->
 
     </div>
+    <!--end::Wrapper-->
 
-    <div class="container">
 
-      {% if messages %}
-        {% for message in messages %}
-          <div class="alert alert-dismissible {% if message.tags %}alert-{{ message.tags }}{% endif %}">
-            {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
+  </div>
+  <!--end::Page-->
+</div>
+<!--end::Root-->
+<!--begin::Drawers-->
+
+<!--layout-partial:layout/topbar/partials/_activity-drawer.html-->
+{#{% include 'layout/topbar/partials/_activity-drawer.html' %}#}
+
+<!--layout-partial:drawers/_chat-drawer.html-->
+{% include 'drawers/_chat-drawer.html' %}
+
+<!--layout-partial:drawers/_debug-drawer.html-->
+{% include 'drawers/_debug-drawer.html' %}
+
+<!--end::Drawers-->
+<!--end::Main-->
+
+<!--layout-partial:layout/engage/_main.html-->
+
+<!--layout-partial:layout/_scrolltop.html-->
+{% include 'layout/_scrolltop.html' %}
+<!--begin::Modals-->
+{% block modal %}
+  <!--layout-partial:partials/modals/_upgrade-plan.html-->
+
+
+  <!--layout-partial:partials/modals/create-app/_main.html-->
+
+
+  <!--layout-partial:partials/modals/_invite-friends.html-->
+
+
+  <!--layout-partial:partials/modals/users-search/_main.html-->
+{% endblock modal %}
+<!--end::Modals-->
+
+<!--begin::hidden form-->
+<div style="display: none;">
+  {% webpush_button %}
+  <form action="{% url 'set_language' %}"
+      method="post" id="change_language_form_id">
+  {% csrf_token %}
+    <input name="next" type="hidden" value="{{ redirect_to }}">
+    <select name="language" id="change_language_select_id">
+        {% get_current_language as LANGUAGE_CODE %}
+        {% get_available_languages as LANGUAGES %}
+        {% get_language_info_list for LANGUAGES as languages %}
+        {% for language in languages %}
+            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                {{ language.name_local }} ({{ language.code }})
+            </option>
         {% endfor %}
-      {% endif %}
+    </select>
+    <input type="submit" value="Go">
+  </form>
+</div>
+<!--end::hidden form-->
 
-      {% block content %}
-        <p>Use this document as a way to quick start any new project.</p>
-      {% endblock content %}
+<!--begin::Javascript-->
+  <!--begin::Global Javascript Bundle(used by all pages)-->
+  <script src="{% static 'metronic/js/scripts.bundle.js' %}"></script>
+  <!--end::Global Javascript Bundle-->
+  <!-- Vendor dependencies bundled as one file-->
+  <script src="{% static 'js/vendors.min.js' %}"></script>
+  <!-- place project specific Javascript in this file -->
+  <script src="{% static 'js/project.min.js' %}"></script>
+  {% block inline_javascript %}
+    <!--begin::Page Custom Javascript(used by this page)-->
+    <!--end::Page Custom Javascript-->
+  {% endblock inline_javascript %}
+<!--end::Javascript-->
 
-    </div> <!-- /container -->
-
-    {% block modal %}{% endblock modal %}
-
-    {% block inline_javascript %}
-    {% comment %}
-    Script tags with only code, no src (defer by default). To run
-    with a "defer" so that you run inline code:
+{% if messages %}
+    {% for message in messages %}
     <script>
-      window.addEventListener('DOMContentLoaded', () => {/* Run whatever you want */});
+      // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
+      Swal.fire({
+        text: "{{ message }}!",
+        icon: "{% if message.tags %}{{ message.tags }}{% else %}success{% endif %}",
+        buttonsStyling: false,
+        confirmButtonText: "{% translate 'Ok' %}!",
+        customClass: {
+          confirmButton: "btn btn-primary"
+        }
+      });
     </script>
-    {% endcomment %}
-    {% endblock inline_javascript %}
-  </body>
+    {% endfor %}
+  {% endif %}
+{% if form.errors %}
+  <script id="id_form_error" type="application/json">
+    {{ form.errors.as_json }}
+  </script>
+  <script>
+    const form_errors = JSON.parse(document.getElementById('id_form_error').textContent.replaceAll('&quot;', '"'));
+    let html = '<ul class="list-inline">';
+    $.each(form_errors, function (index, value){
+      $.each(value, function (index, _value){
+        html += _value.message;
+      });
+    });
+    html += '</ul>'
+    // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
+    Swal.fire({
+      html: html,
+      icon: "error",
+      buttonsStyling: false,
+      confirmButtonText: "{% translate 'Ok' %}!",
+      customClass: {
+        confirmButton: "btn btn-danger"
+      }
+    });
+  </script>
+{% endif %}
+
+<!--begin::Django language-->
+<script>
+  function submitChangeLanguageForm(language) {
+     $('#change_language_select_id').val(language).change();
+     $('#change_language_form_id').submit()
+  }
+</script>
+<!--end::Django language-->
+<!--begin::Webpush auto click-->
+<script>
+  $(document).ready(function() {
+    setTimeout(function (){
+      $("#webpush-subscribe-button").trigger('click');
+    }, 2000)
+  });
+</script>
+<!--end::Webpush auto click-->
+
+</body>
+<!--end::Body-->
 </html>

@@ -37,7 +37,7 @@ class MetaModel(Model):
         """Return object as Image url instead of __str__"""
         avatar = getattr(self, str(self.Metadata.avatar_field), None)
         return (
-            f"/static/media/svg/shapes/abstract-{randint(1, 10)}.svg"
+            f"/static/metronic/media/svg/shapes/abstract-{randint(1, 5)}-dark.svg"
             if not avatar
             else getattr(avatar, "url")
         )
