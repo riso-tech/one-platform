@@ -166,6 +166,7 @@ class ExposeDetailView(ExtendView, DetailView):
             }
             for item in fields
         ]
+
         context["breadcrumb"] = self.breadcrumb()
         return self.render_to_response(context)
 

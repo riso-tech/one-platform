@@ -11,6 +11,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     """Migration"""
+
     initial = True
 
     dependencies = [
@@ -42,7 +43,7 @@ class Migration(migrations.Migration):
                     models.BooleanField(
                         default=False,
                         help_text="Designates that this user has all "
-                                  + "permissions without explicitly assigning them.",
+                        + "permissions without explicitly assigning them.",
                         verbose_name="superuser status",
                     ),
                 ),
@@ -53,7 +54,7 @@ class Migration(migrations.Migration):
                             "unique": "A user with that username already exists."
                         },
                         help_text="Required. 150 characters or fewer. "
-                                  + "Letters, digits and @/./+/-/_ only.",
+                        + "Letters, digits and @/./+/-/_ only.",
                         max_length=150,
                         unique=True,
                         validators=[
@@ -81,7 +82,7 @@ class Migration(migrations.Migration):
                     models.BooleanField(
                         default=True,
                         help_text="Designates whether this user should be treated as active. "
-                                  + "Unselect this instead of deleting accounts.",
+                        + "Unselect this instead of deleting accounts.",
                         verbose_name="active",
                     ),
                 ),
@@ -102,7 +103,7 @@ class Migration(migrations.Migration):
                     models.ManyToManyField(
                         blank=True,
                         help_text="The groups this user belongs to. A user will get all "
-                                  + "permissions granted to each of their groups.",
+                        + "permissions granted to each of their groups.",
                         related_name="user_set",
                         related_query_name="user",
                         to="auth.Group",

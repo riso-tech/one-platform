@@ -1,12 +1,15 @@
-{% extends "account/base-col-1.html" %}
+{% extends "base.html" %}
+{% load static i18n %}
 
-{% load i18n %}
-{% load crispy_forms_tags %}
+{% block title %}User: {{ object.username }}{% endblock %}
 
-{% block head_title %}{% translate "Account" %}{% endblock %}
-
-{% block inner %}
-<h1>{% translate "E-mail Addresses" %}</h1>
+{% block content %}
+  <!--begin::Container-->
+  {% include 'users/partials/user_card.html' with user=request.user %}
+  <!--begin::Basic info-->
+  <div class="card mb-5 mb-xl-10">
+    <!--begin::Content-->
+    <h1>{% translate "E-mail Addresses" %}</h1>
 
 {% if user.emailaddress_set.all %}
 <p>{% translate 'The following e-mail addresses are associated with your account:' %}</p>
@@ -51,12 +54,14 @@
 
     <form method="post" action="{% url 'account_email' %}" class="add_email">
         {% csrf_token %}
-        {{ form|crispy }}
+        {{ form }}
         <button class="btn btn-primary" name="action_add" type="submit">{% translate "Add E-mail" %}</button>
     </form>
-
-{% endblock %}
-
+    <!--end::Content-->
+  </div>
+  <!--end::Basic info-->
+  <!--end::Container-->
+{% endblock content %}
 
 {% block inline_javascript %}
 {{ block.super }}

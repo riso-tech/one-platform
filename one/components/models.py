@@ -15,6 +15,7 @@ from django.db.models import (
 )
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from rest_framework.serializers import ModelSerializer
 
 
 class MetaModel(Model):
@@ -77,6 +78,22 @@ class MetaModel(Model):
             + "</div>"
             + "</div>"
         )
+
+    @property
+    def as_dict(self):
+        """as_dict"""
+
+        class ObjectSerializer(ModelSerializer):
+            class Meta:
+                model = type(self)
+                fields = "__all__"
+                depth = 1
+
+        serializer = ObjectSerializer(self)
+        return [
+            {"key": item, "value": serializer.data.get(item)}
+            for item in serializer.data
+        ]
 
 
 class BaseModel(MetaModel):

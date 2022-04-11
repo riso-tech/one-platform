@@ -5,13 +5,14 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
     """Migration"""
+
     dependencies = [
-        ('users', '0001_initial'),
+        ("users", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='user',
+            name="user",
             options={},
         ),
     ]

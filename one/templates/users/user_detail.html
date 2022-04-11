@@ -7,15 +7,14 @@
   <!--begin::Container-->
   {% include 'users/partials/user_card.html' with user=request.user %}
   <!--begin::details View-->
-  <div class="card mb-5 mb-xl-10"
-       id="kt_profile_details_view">
+  <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
     <!--begin::Card body-->
     <div class="row card-body p-9">
       {% for field in fields %}
         <!--begin::Input group-->
         <div class="col-md-6 form-floating mb-7">
-            <input type="text" class="form-control" id="floatingInput" value="{{ field.value }}" disabled/>
-            <label for="floatingInput">{{ field.verbose|title }}</label>
+          <input type="text" class="form-control" id="floatingInput" value="{{ field.value }}" disabled/>
+          <label for="floatingInput">{{ field.verbose|title }}</label>
         </div>
         <!--end::Input group-->
       {% endfor %}
