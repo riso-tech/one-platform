@@ -25,3 +25,17 @@ class UserViewSet(RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericV
     def me(self, request):
         serializer = UserSerializer(request.user, context={"request": request})
         return Response(status=status.HTTP_200_OK, data=serializer.data)
+
+    @action(detail=False, url_path="set-theme")
+    def set_theme(self, request):
+        theme = request.GET.get("theme", "light")
+        request.user.set_theme(theme)
+        serializer = UserSerializer(request.user, context={"request": request})
+        return Response(status=status.HTTP_200_OK, data=serializer.data)
+
+    @action(detail=False, url_path="set-language")
+    def set_language(self, request):
+        language = request.GET.get("language", "light")
+        request.user.set_language(language)
+        serializer = UserSerializer(request.user, context={"request": request})
+        return Response(status=status.HTTP_200_OK, data=serializer.data)

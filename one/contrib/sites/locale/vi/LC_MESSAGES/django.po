@@ -17,19 +17,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-#: one/components/apps.py:7
-msgid "Components"
+#: one/contrib/sites/settings/apps.py:21
+msgid "Sites"
 msgstr ""
 
-#: one/components/models.py:95
-msgid "Created on"
+#: one/contrib/sites/settings/models.py:20
+msgid "Favicon of site"
 msgstr ""
 
-#: one/components/models.py:98
-msgid "Last modified on"
+#: one/contrib/sites/settings/models.py:26
+msgid "Logo of site"
 msgstr ""
 
-#: one/components/models.py:102
-msgid "Created by"
+#: one/contrib/sites/settings/models.py:32
+msgid "Mobile logo of site"
 msgstr ""

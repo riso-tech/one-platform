@@ -24,6 +24,19 @@ class User(BaseModel, AbstractUser):
     first_name = None  # type: ignore
     last_name = None  # type: ignore
 
+    language = CharField(
+        _("User default language"),
+        max_length=2,
+        choices=settings.LANGUAGES,
+        default=settings.ENGLISH,
+    )
+    theme = CharField(
+        _("User default theme"),
+        max_length=5,
+        choices=settings.THEMES,
+        default=settings.LIGHT_THEME,
+    )
+
     class Metadata:
         avatar_field = None
         name_field = "name"
@@ -71,3 +84,16 @@ class User(BaseModel, AbstractUser):
         return online if self.is_online else offline
 
     # End User Online Status
+
+    # Constructor Set
+    def set_theme(self, theme):
+        """Set theme"""
+        self.theme = theme
+        self.save()
+
+    def set_language(self, language):
+        """Set theme"""
+        self.language = language
+        self.save()
+
+    # End Constructor Set

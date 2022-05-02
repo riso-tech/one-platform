@@ -1,0 +1,16 @@
+<!--begin::Input group-->
+<div class="row {% if forloop.last %}mb-0{% else %}mb-6{% endif %}">
+  <!--begin::Label-->
+  <label
+    class="col-lg-4 col-form-label fw-bold fs-6 {% if field.field.required %}required{% endif %}">
+    {{ field.label|title }}</label>
+  <!--end::Label-->
+  <!--begin::Col-->
+  <div class="col-lg-8 fv-row">
+    {{ field }}
+    <div class="fv-plugins-message-container valid-feedback">{{ field.help_text }}</div>
+    <div class="fv-plugins-message-container invalid-feedback">{{ field.errors.as_text }}</div>
+  </div>
+  <!--end::Col-->
+</div>
+<!--end::Input group-->

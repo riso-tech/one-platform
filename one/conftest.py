@@ -2,8 +2,10 @@ from importlib import import_module
 
 import pytest
 from django.conf import settings as conf_settings
+from django.contrib.sites.models import Site
 from django.http import HttpRequest
 
+from one.contrib.sites.tests.factories import SiteFactory
 from one.users.models import User
 from one.users.tests.factories import UserFactory
 
@@ -16,6 +18,11 @@ def media_storage(settings, tmpdir):
 @pytest.fixture
 def user() -> User:
     return UserFactory()
+
+
+@pytest.fixture
+def site() -> Site:
+    return SiteFactory()
 
 
 @pytest.fixture()

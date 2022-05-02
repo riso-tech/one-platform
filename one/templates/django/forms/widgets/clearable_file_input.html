@@ -1,0 +1,9 @@
+{% load i18n static %}
+
+{% if 'accept' in widget.attrs and 'image' in widget.attrs.accept %}
+  {% include 'django/forms/widgets/image.html' %}
+{% elif widget.type == 'file' %}
+  {% include "django/forms/widgets/modern_file.html" %}
+{% else %}
+  {% include "django/forms/widgets/input.html" %}
+{% endif %}

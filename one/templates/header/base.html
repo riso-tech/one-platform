@@ -27,13 +27,12 @@
     </div>
     <!--end::Aside mobile toggle-->
     <!--begin::Mobile logo-->
-    <!--TODO: Logo-->
-{#    <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">#}
-{#      <a href="?page=index" class="d-lg-none">#}
-{#        <img alt="Logo" src="{% static 'metronic/media/logos/logo-2.svg' %}"#}
-{#             class="h-30px"/>#}
-{#      </a>#}
-{#    </div>#}
+    <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
+      <a href="{% url 'users:detail' request.user.username %}" class="d-lg-none">
+        <img alt="Logo" src="{{ site.setting.mobile_logo_url }}"
+             class="h-30px"/>
+      </a>
+    </div>
     <!--end::Mobile logo-->
     <!--begin::Wrapper-->
     <div

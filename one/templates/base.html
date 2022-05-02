@@ -24,8 +24,13 @@
         href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"/>
   <!--end::Fonts-->
   <!--begin::Global Stylesheets Bundle(used by all pages)-->
-  <link href="{% static 'metronic/plugins/global/plugins.bundle.css' %}" rel="stylesheet" type="text/css"/>
-  <link href="{% static 'metronic/css/style.bundle.css' %}" rel="stylesheet" type="text/css"/>
+  {% if request.user.theme == "light" %}
+    <link href="{% static 'metronic/plugins/global/plugins.bundle.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'metronic/css/style.bundle.css' %}" rel="stylesheet" type="text/css"/>
+  {% else %}
+    <link href="{% static 'metronic/plugins/global/plugins.dark.bundle.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'metronic/css/style.dark.bundle.css' %}" rel="stylesheet" type="text/css"/>
+  {% endif %}
   <link href="{% static 'css/vendors.min.css' %}" rel="stylesheet" type="text/css"/>
   <!-- This file stores project-specific CSS -->
   <link href="{% static 'css/project.min.css' %}" rel="stylesheet">
@@ -33,14 +38,12 @@
 
   <!--begin::Global Javascript Bundle(used by all pages)-->
   <script src="{% static 'metronic/plugins/global/plugins.bundle.js' %}"></script>
-  <!--end::Global Javascript Bundle-->
-  <!--begin::Global Javascript Bundle(used by all pages)-->
   <script src="{% static 'metronic/js/scripts.bundle.js' %}"></script>
+  <!--end::Global Javascript Bundle-->
   <!-- Vendor dependencies bundled as one file-->
   <script src="{% static 'js/vendors.min.js' %}"></script>
   <!-- place project specific Javascript in this file -->
   <script src="{% static 'js/project.min.js' %}"></script>
-  <!--end::Global Javascript Bundle-->
 
 </head>
 <!--end::Head-->
@@ -48,7 +51,6 @@
 <body id="kt_body"
       class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled aside-enabled aside-fixed"
       style="--kt-toolbar-height:55px;--kt-toolbar-height-tablet-and-mobile:55px">
-
 <!--begin::Main-->
 <!--begin::Root-->
 <div class="d-flex flex-column flex-root">
@@ -56,7 +58,7 @@
   <div class="page d-flex flex-row flex-column-fluid">
 
     <!--layout-partial:aside/base.html-->
-{#    {% include 'aside/base.html' %}#}
+    {% include 'aside/base.html' %}
 
     <!--begin::Wrapper-->
     <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
@@ -116,6 +118,7 @@
       <!--end::Content-->
 
       <!--layout-partial:layout/_footer.html-->
+{#      {% include 'layout/footer.html' %}#}
 
     </div>
     <!--end::Wrapper-->
@@ -233,10 +236,41 @@
 <script>
   function submitChangeLanguageForm(language) {
     $('#change_language_select_id').val(language).change();
-    $('#change_language_form_id').submit()
+    $.get("{% url 'api:user-set-language' %}?language=" + language);
+    $('#change_language_form_id').submit();
   }
 </script>
+{% if request.user.language != request.LANGUAGE_CODE %}
+  <script>
+    submitChangeLanguageForm("{{ request.user.language }}");
+  </script>
+{% endif %}
 <!--end::Django language-->
+
+<!--begin::Theme mode-->
+<script>
+  function submitSetThemeMode(theme) {
+    KTApp.setThemeMode(theme, function () {
+      $.get("{% url 'api:user-set-theme' %}?theme=" + theme, function (data) {
+        if (theme == 'dark') {
+          $("#theme_mode_light_id").addClass("d-none");
+          $("#theme_mode_dark_id").removeClass("d-none");
+          $("#theme_mode_light_a_id").removeClass("active");
+          $("#theme_mode_dark_a_id").addClass("active");
+        } else {
+          $("#theme_mode_light_id").removeClass("d-none");
+          $("#theme_mode_dark_id").addClass("d-none");
+          $("#theme_mode_light_a_id").addClass("active");
+          $("#theme_mode_dark_a_id").removeClass("active");
+        }
+      });
+    });
+  }
+
+  KTApp.setThemeMode("{{ request.user.theme }}", function () {
+  });
+</script>
+<!--end::Theme mode-->
 <!--begin::Webpush auto click-->
 <script>
   $(document).ready(function () {

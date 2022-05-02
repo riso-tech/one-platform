@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+{% load static i18n humanize %}
+
+{% block title %}Site: {{ object.name }}{% endblock %}
+
+{% block content %}
+  <!--begin::Content-->
+  <div class="flex-lg-row-fluid">
+    <!--begin::Card-->
+    <div class="card">
+      <!--begin::Card body-->
+      <div class="card-body">
+        <!--begin::Stepper-->
+        <div class="stepper stepper-pills stepper-column d-flex flex-column flex-lg-row" id="site_setting_vertical">
+          <!--begin::Aside-->
+          <div class="d-flex flex-row-auto w-100 w-lg-300px">
+            <!--begin::Nav-->
+            <div class="stepper-nav flex-cente">
+              <!--begin::Step 1-->
+              <div class="stepper-item me-5 current" data-kt-stepper-element="nav" data-kt-stepper-action="step">
+                <!--begin::Line-->
+                <div class="stepper-line w-40px"></div>
+                <!--end::Line-->
+
+                <!--begin::Icon-->
+                <div class="stepper-icon w-40px h-40px">
+                  <i class="stepper-check fas fa-check"></i>
+                  <span class="stepper-number">1</span>
+                </div>
+                <!--end::Icon-->
+
+                <!--begin::Label-->
+                <div class="stepper-label">
+                  <h3 class="stepper-title">
+                    {% translate 'General' %}
+                  </h3>
+
+                  <div class="stepper-desc">
+                    {% translate 'Name and Domain' %}
+                  </div>
+                </div>
+                <!--end::Label-->
+              </div>
+              <!--end::Step 1-->
+
+              <!--begin::Step 2-->
+              <div class="stepper-item me-5" data-kt-stepper-element="nav" data-kt-stepper-action="step">
+                <!--begin::Line-->
+                <div class="stepper-line w-40px"></div>
+                <!--end::Line-->
+
+                <!--begin::Icon-->
+                <div class="stepper-icon w-40px h-40px">
+                  <i class="stepper-check fas fa-check"></i>
+                  <span class="stepper-number">2</span>
+                </div>
+                <!--begin::Icon-->
+
+                <!--begin::Label-->
+                <div class="stepper-label">
+                  <h3 class="stepper-title">
+                    {% translate 'Images' %}
+                  </h3>
+
+                  <div class="stepper-desc">
+                    {% translate 'Favicon, Logos' %}
+                  </div>
+                </div>
+                <!--end::Label-->
+              </div>
+              <!--end::Step 2-->
+            </div>
+            <!--end::Nav-->
+          </div>
+
+          <!--begin::Content-->
+          <div class="flex-row-fluid">
+            <!--begin::Form-->
+            <form class="form mx-auto" novalidate="novalidate" method="post"
+                  action="{% url 'settings:site' %}" enctype="multipart/form-data">
+              <!--begin::Group-->
+              <div class="mb-5">
+                <!--begin::Step 1-->
+                <div class="flex-column current" data-kt-stepper-element="content">
+                  {% csrf_token %}
+                  {% for field in form %}
+                    {% include 'forms/one_row_field.html' %}
+                  {% endfor %}
+                </div>
+                <!--begin::Step 1-->
+
+                <!--begin::Step 2-->
+                <div class="flex-column" data-kt-stepper-element="content">
+                  {% for field in setting_form %}
+                    {% if field.label != 'Site' %}
+                      {% include 'forms/one_row_field.html' %}
+                    {% else %}
+                      <div class="d-none">
+                        {% include 'forms/one_row_field.html' %}
+                      </div>
+                    {% endif %}
+
+                  {% endfor %}
+                </div>
+                <!--begin::Step 2-->
+              </div>
+              <!--end::Group-->
+
+              <!--begin::Actions-->
+              <div class="d-flex flex-stack">
+                <!--begin::Wrapper-->
+                <div class="me-2">
+                  <button type="button" class="btn btn-light btn-active-light-primary"
+                          data-kt-stepper-action="previous">
+                    {% translate 'Back' %}
+                  </button>
+                </div>
+                <!--end::Wrapper-->
+                <!--begin::Wrapper-->
+                <div>
+                  <button type="submit" class="btn btn-primary" data-kt-stepper-action="submit">
+                      <span class="indicator-label">
+                          {% translate 'Save Changes' %}
+                      </span>
+                    <span class="indicator-progress">
+                        {% translate "Please wait" %}...
+                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                      </span>
+                  </button>
+                  <button type="button" class="btn btn-primary" data-kt-stepper-action="next">
+                    {% translate 'Continue' %}
+                  </button>
+                </div>
+                <!--end::Wrapper-->
+              </div>
+              <!--end::Actions-->
+            </form>
+            <!--end::Form-->
+          </div>
+        </div>
+        <!--end::Stepper-->
+      </div>
+      <!--end::Card body-->
+    </div>
+    <!--end::Card-->
+  </div>
+  <!--end::Content-->
+{% endblock content %}
+
+<!--begin::Javascript-->
+{% block inline_javascript %}
+  <script>
+    // Stepper lement
+    var element = document.querySelector("#site_setting_vertical");
+
+    // Initialize Stepper
+    var stepper = new KTStepper(element);
+
+    // Handle navigation click
+    stepper.on("kt.stepper.click", function (stepper) {
+      stepper.goTo(stepper.getClickedStepIndex()); // go to clicked step
+    });
+
+    // Handle next step
+    stepper.on("kt.stepper.next", function (stepper) {
+      stepper.goNext(); // go next step
+    });
+
+    // Handle previous step
+    stepper.on("kt.stepper.previous", function (stepper) {
+      stepper.goPrevious(); // go previous step
+    });
+  </script>
+{% endblock inline_javascript %}
+<!--end::Javascript-->

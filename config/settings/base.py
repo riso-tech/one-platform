@@ -90,6 +90,7 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "one.components",
+    "one.contrib.sites.settings",
     "one.users",
     "one.pages",
     # Your stuff: custom apps go here
@@ -197,6 +198,7 @@ TEMPLATES = [
                 "django.template.context_processors.static",
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
+                "one.contrib.sites.settings.context_processors.site_setting_processor",
                 "one.users.context_processors.allauth_settings",
             ],
         },
@@ -356,6 +358,15 @@ WEBPUSH_SETTINGS = {
 
 # https://github.com/Dolidodzik/django-login-history
 IP_PLACEHOLDER = "27.64.141.170"
+
+# THEME COLOR
+# ------------------------------------------------------------------------------
+DARK_THEME = "dark"
+LIGHT_THEME = "light"
+THEMES = [
+    (DARK_THEME, _("Dark theme")),
+    (LIGHT_THEME, _("Light theme")),
+]
 
 # Your stuff...
 # ------------------------------------------------------------------------------
