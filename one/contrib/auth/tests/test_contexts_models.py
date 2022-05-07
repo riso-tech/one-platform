@@ -19,4 +19,4 @@ def test_save_group(group: Group):
 
 def test_avatar_url(group: Group):
     """test_avatar_url"""
-    assert "/static/metronic/media/" in group.context.avatar_url
+    assert "/static/metronic/media/" in group.context.as_avatar

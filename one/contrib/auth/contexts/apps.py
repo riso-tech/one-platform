@@ -1,6 +1,5 @@
 from django.apps import AppConfig
 from django.db.models.signals import post_migrate
-from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 
@@ -20,15 +19,7 @@ def create_default_group_context(sender, **kwargs):
 class GroupConfig(AppConfig):
     name = "one.contrib.auth.contexts"
     verbose_name = _("Groups")
-    registered_menus = []
 
     def ready(self):
-        self.registered_menus = [
-            {
-                "group": "User Managements",
-                "label": _("User"),
-                "url": reverse("auth:group-detail", kwargs={"pk": 1}),
-            }
-        ]
         post_migrate.connect(create_default_group_context, sender=self)
         from .signals import create_or_update_group_context  # noqa
