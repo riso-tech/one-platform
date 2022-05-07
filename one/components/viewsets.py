@@ -22,7 +22,7 @@ class BaseModelViewSet(ModelViewSet):
         :return:
         """
         try:
-            field = self.get_model()._meta.get_field(field)
+            field = self.get_model()._meta.get_field(field)  # noqa
         except FieldDoesNotExist:
             return False
         if field.is_relation:
