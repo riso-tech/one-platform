@@ -2,10 +2,12 @@ from django.contrib.auth.models import Group
 from django.db.models import CASCADE, ImageField, Model, OneToOneField
 from django.utils.translation import gettext_lazy as _
 
+from one.components.models import MetaModel
+
 from .utils import group_context_images_directory_path
 
 
-class Context(Model):
+class Context(MetaModel, Model):
     """Setting model is OneToOne related to Site model."""
 
     group = OneToOneField(
@@ -23,14 +25,10 @@ class Context(Model):
         upload_to=group_context_images_directory_path,
     )
 
+    class Metadata:
+        avatar_field = "avatar"
+        name_field = None
+        title_field = None
+
     def __str__(self):
         return self.group.name
-
-    @property
-    def avatar_url(self):
-        """Return logo url"""
-        return (
-            "/static/metronic/media/logos/logo-1-dark.svg"
-            if not self.avatar
-            else getattr(self.avatar, "url")
-        )
