@@ -119,7 +119,7 @@ var DT = (function () {
                     toggleToolbars();
                 });
 
-                // TODO: HANDLE META DATA FOR FORM FILTER
+                // TODO: HANDLE META DATA FOR FORM FILTER WILL APPEND TO SELECT, RETURN FROM API
             },
         };
         // Init datatable --- more info on datatables: https://datatables.net/manual/

@@ -135,18 +135,18 @@
             </div>
             <!--end::Input group-->
             {% for field in context_form %}
-                <!--begin::Input group-->
-                <div class="mb-5 fv-row">
-                  <!--begin::Label-->
-                  <label class="fs-5 fw-bold mb-2 {% if field.field.required %}required{% endif %}">
-                    {{ field.label|title }}
-                  </label>
-                  <!--end::Label-->
-                  <!--begin::Input-->
-                  {{ field }}
-                  <!--end::Input-->
-                </div>
-                <!--end::Input group-->
+              <!--begin::Input group-->
+              <div class="mb-5 fv-row">
+                <!--begin::Label-->
+                <label class="fs-5 fw-bold mb-2 {% if field.field.required %}required{% endif %}">
+                  {{ field.label|title }}
+                </label>
+                <!--end::Label-->
+                <!--begin::Input-->
+                {{ field }}
+                <!--end::Input-->
+              </div>
+              <!--end::Input group-->
             {% endfor %}
           </div>
           <!--end::Modal body-->
@@ -184,17 +184,28 @@
       const table = DT.init(
         'kt_table_settings',
         {},
+        //endpoint
         {
+          add: '',
+          edit: '',
           delete: "{% url 'api:group-delete' %}"
         },
-        [
-          {
-          searchable: false, // Disable ordering on column 0 (checkbox)
-          targets: 1,
+        //language
+        {
+          confirm_delete: '',
+          delete_success: '',
+          delete_fail: '',
 
-        }]
+          // TODO: same for edit and add, will implement
+          confirm_add: '',
+          add_success: '',
+          add_fail: '',
+
+          confirm_edit: '',
+          edit_success: '',
+          edit_fail: '',
+        }
       );
-
 
 
     })
