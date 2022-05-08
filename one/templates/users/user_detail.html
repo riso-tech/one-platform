@@ -25,21 +25,20 @@
             <div class="card-toolbar">
               <div class="my-1 me-4">
                 <!--begin::Action-->
-                <a href="#" class="btn btn-sm btn-success my-1" data-bs-toggle="modal"
-                   data-bs-target="#user_profile_add_email_modal">
-                  <!--begin::Svg Icon | path: assets/media/icons/duotune/general/gen035.svg-->
-                  <span class="svg-icon svg-icon-1 svg-icon-success">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                      <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="5" fill="currentColor"/>
-                      <rect x="10.8891" y="17.8033" width="12" height="2" rx="1"
-                            transform="rotate(-90 10.8891 17.8033)" fill="currentColor"/>
-                      <rect x="6.01041" y="10.9247" width="12" height="2" rx="1" fill="currentColor"/>
-                    </svg>
-                  </span>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#user_profile_add_email_modal">
+                  <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
+                  <span class="svg-icon svg-icon-2">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1"
+                          transform="rotate(-90 11.364 20.364)"
+                          fill="currentColor"/>
+                    <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor"/>
+                  </svg>
+                </span>
                   <!--end::Svg Icon-->
                   {% translate 'Add new email' %}
-                </a>
+                </button>
                 <!--end::Action-->
                 <button class="btn btn-icon my-1" type="submit"
                         name="action_primary" data-bs-toggle="tooltip" data-bs-placement="top"

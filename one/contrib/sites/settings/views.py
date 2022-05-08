@@ -40,7 +40,7 @@ class SiteDetailView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         Handle POST requests: instantiate a form instance with the passed
         POST variables and then check if it's valid.
         """
-        self.object = self.get_object()
+        self.object = self.get_object()  # noqa
         setting_form = SettingForm(
             self.request.POST, self.request.FILES, instance=self.object.setting
         )

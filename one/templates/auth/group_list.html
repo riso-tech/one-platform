@@ -16,7 +16,22 @@
              data-kt-table-toolbar="base">
           {#          {% include 'partials/widgets/tables/_filter.html' %}#}
           {# {% include 'partials/widgets/tables/_export.html' %}#}
-          {#          {% include 'partials/widgets/tables/_new_object.html' %}#}
+          <!--begin::Add group-->
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                  data-bs-target="#kt_modal_add_group">
+            <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
+            <span class="svg-icon svg-icon-2">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1"
+                      transform="rotate(-90 11.364 20.364)"
+                      fill="currentColor"/>
+                <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor"/>
+              </svg>
+            </span>
+            <!--end::Svg Icon-->
+            {% translate 'Add Group' %}
+          </button>
+          <!--end::Add group-->
         </div>
         <!--end::Toolbar-->
         <!--begin::Group actions-->
@@ -56,7 +71,7 @@
             </div>
           </th>
 
-          <th class="min-w-125px" data-data="context.as_cell">{% translate 'Group' %}</th>
+          <th class="min-w-125px" data-data="context.as_cell" name="">{% translate 'Group' %}</th>
 
           <th class="text-end min-w-100px" data-data="id">Actions</th>
         </tr>
@@ -73,6 +88,89 @@
   <!--end::Card-->
 {% endblock content %}
 
+{% block modal %}
+  <!--begin::Modal - Add new group-->
+  <div class="modal fade" id="kt_modal_add_group" tabindex="-1" aria-hidden="true">
+    <!--begin::Modal dialog-->
+    <div class="modal-dialog modal-dialog-centered mw-650px">
+      <!--begin::Modal content-->
+      <div class="modal-content">
+        <!--begin::Modal header-->
+        <div class="modal-header" id="kt_modal_add_new_group_header">
+          <!--begin::Modal title-->
+          <h2>{% translate 'Add new group' %}</h2>
+          <!--end::Modal title-->
+          <!--begin::Close-->
+          <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+            <span class="svg-icon svg-icon-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
+                      fill="black"/>
+                <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"/>
+              </svg>
+            </span>
+            <!--end::Svg Icon-->
+          </div>
+          <!--end::Close-->
+        </div>
+        <!--end::Modal header-->
+        <!--begin::Form-->
+        <form id="kt_modal_add_new_group_form" class="form" enctype="multipart/form-data"
+              action="{% url 'auth:group-create' %}" method="post">
+          {% csrf_token %}
+          <!--begin::Modal body-->
+          <div class="modal-body py-10 px-lg-17">
+            <!--begin::Input group-->
+            <div class="mb-5 fv-row">
+              <!--begin::Label-->
+              <label class="required fs-5 fw-bold mb-2">{% translate 'Enter New Group' %}</label>
+              <!--end::Label-->
+              <!--begin::Input-->
+              <input type="text"
+                     class="form-control form-control-solid"
+                     placeholder="{% translate 'Name' %}"
+                     name="name" id="id_name" required/>
+              <!--end::Input-->
+            </div>
+            <!--end::Input group-->
+            {% for field in context_form %}
+                <!--begin::Input group-->
+                <div class="mb-5 fv-row">
+                  <!--begin::Label-->
+                  <label class="fs-5 fw-bold mb-2 {% if field.field.required %}required{% endif %}">
+                    {{ field.label|title }}
+                  </label>
+                  <!--end::Label-->
+                  <!--begin::Input-->
+                  {{ field }}
+                  <!--end::Input-->
+                </div>
+                <!--end::Input group-->
+            {% endfor %}
+          </div>
+          <!--end::Modal body-->
+          <!--begin::Modal footer-->
+          <div class="modal-footer flex-center">
+            <!--begin::Button-->
+            <button type="submit" name="action_add" id="kt_modal_add_new_group_submit" class="btn btn-primary">
+              <span class="indicator-label">{% translate "Submit" %}</span>
+              <span class="indicator-progress">{% translate "Please wait" %}...
+								<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+            </button>
+            <!--end::Button-->
+          </div>
+          <!--end::Modal footer-->
+        </form>
+        <!--end::Form-->
+      </div>
+      <!--end::Modal content-->
+    </div>
+    <!--end::Modal dialog-->
+  </div>
+  <!--end::Modal - Add new group-->
+{% endblock modal %}
+
 {% block inline_javascript %}
   <script
     src="{% static 'metronic/plugins/custom/datatables/datatables.bundle.js' %}"></script>
@@ -88,7 +186,17 @@
         {},
         {
           delete: "{% url 'api:group-delete' %}"
-        });
+        },
+        [
+          {
+          searchable: false, // Disable ordering on column 0 (checkbox)
+          targets: 1,
+
+        }]
+      );
+
+
+
     })
   </script>
 {% endblock inline_javascript %}

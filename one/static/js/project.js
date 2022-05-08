@@ -443,7 +443,14 @@ var DT = (function () {
       _endpoint = {
         delete: "",
       },
-      _language = {}
+      _language = {},
+      _extra_columundefs = [
+          {
+          searchable: false, // Disable ordering on column 0 (checkbox)
+          targets: 1,
+
+        },
+      ]
     ) {
       initTable(_tableId, _options, _endpoint, _language);
       // initToggleToolbar(); // it called in event draw, comment it
