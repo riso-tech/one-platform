@@ -2,43 +2,43 @@
 "use strict";
 
 var DT = (function () {
-  // Define shared variables
+    // Define shared variables
 
-  var table;
-  var datatable;
-  var arr_selected = [];
-  var toolbarBase;
-  var toolbarSelected;
-  var selectedCount;
-  var totalCount = 0;
-  // Private functions
-  var initTable = function (
-    tableId = "",
-    options = {},
-    endpoint = {},
-    language = {}
-  ) {
-    table = document.getElementById(tableId);
-    const defaultOptions = {
-      info: false,
-      order: [],
-      pageLength: 10,
-      lengthChange: false,
-      columnDefs: [
-        {
-          orderable: false, // Disable ordering on column 0 (checkbox)
-          targets: 0,
-          render: function (data, type, full, meta) {
-            return `<div class="form-check form-check-sm form-check-custom form-check-solid">
+    var table;
+    var datatable;
+    var arr_selected = [];
+    var toolbarBase;
+    var toolbarSelected;
+    var selectedCount;
+    var totalCount = 0;
+    // Private functions
+    var initTable = function (
+        tableId = "",
+        options = {},
+        endpoint = {},
+        language = {}
+    ) {
+        table = document.getElementById(tableId);
+        const defaultOptions = {
+            info: false,
+            order: [],
+            pageLength: 10,
+            lengthChange: false,
+            columnDefs: [
+                {
+                    orderable: false, // Disable ordering on column 0 (checkbox)
+                    targets: 0,
+                    render: function (data, type, full, meta) {
+                        return `<div class="form-check form-check-sm form-check-custom form-check-solid">
                      <input class="form-check-input widget-9-check" type="checkbox" value="${data}">
                      </div>`;
-          },
-        },
-        {
-          orderable: false, // Disable ordering on column (actions)
-          targets: -1,
-          render: function (data, type, row, meta) {
-            return `<div class="d-flex justify-content-end flex-shrink-0">
+                    },
+                },
+                {
+                    orderable: false, // Disable ordering on column (actions)
+                    targets: -1,
+                    render: function (data, type, row, meta) {
+                        return `<div class="d-flex justify-content-end flex-shrink-0">
                     <a href="javascript:void(0);" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
                         <span class="svg-icon svg-icon-3">
@@ -71,395 +71,412 @@ var DT = (function () {
                         <!--end::Svg Icon-->
                     </a>
                 </div>`;
-          },
-        },
-      ],
-      processing: true,
-      dom: "lrtip", // DataTable element position
-      language: {
-        processing:
-          '<div data-kt-indicator="on"><span class="indicator-progress">\n' +
-          '        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>\n' +
-          "    </span></div>",
-      },
-      rowCallback: function (row, data) {
-        $(row)
-          .find("input.asset-checkbox-select")
-          .prop(
-            "checked",
-            arr_selected.findIndex((item) => item === data["ID"]) > -1
-          );
-      },
-      drawCallback: function (settings) {
-        if (settings && settings["json"]) {
-          totalCount = parseInt(settings["json"]["recordsFiltered"]);
-        }
-
-        $(document).on("change", 'input[type="checkbox"]', function () {
-          if ($(this).is(":checked")) {
-            arr_selected.push($(this).val());
-          } else {
-            arr_selected.splice(arr_selected.indexOf($(this).val()), 1);
-          }
-          // console.log('arr_selected: ', arr_selected);
-        });
-      },
-    };
-    // Init datatable --- more info on datatables: https://datatables.net/manual/
-    datatable = $(table).DataTable({ ...defaultOptions, ...options });
-
-    // Re-init functions on every table re-draw -- more info: https://datatables.net/reference/event/draw
-    datatable.on("draw", function () {
-      initToggleToolbar(endpoint.delete);
-      handleDeleteRows(endpoint.delete, language);
-      toggleToolbars();
-    });
-
-    $('input[data-kt-check="true"]').on("change", function () {
-      if (this.checked) {
-        $('tbody td [type="checkbox"]').prop("checked", true);
-      } else {
-        $('tbody td [type="checkbox"]').prop("checked", false);
-      }
-      toggleToolbars();
-    });
-
-    $('#kt_table_settings tbody td input[type="checkbox"]').on(
-      "change",
-      function () {
-        toggleToolbars();
-      }
-    );
-
-    return datatable;
-  };
-
-  // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
-  var handleSearchDatatable = () => {
-    const filterSearch = document.querySelector(
-      '[data-kt-table-filter="search"]'
-    );
-    filterSearch.addEventListener("keyup", function (e) {
-      datatable.search(e.target.value).draw();
-    });
-  };
-
-  // Filter Datatable
-  var handleFilterDatatable = () => {
-    // Select filter options
-    const filterForm = document.querySelector('[data-kt-table-filter="form"]');
-    const filterButton = filterForm.querySelector(
-      '[data-kt-table-filter="filter"]'
-    );
-    const selectOptions = filterForm.querySelectorAll("select");
-
-    // Filter datatable on submit
-    filterButton.addEventListener("click", function () {
-      var filterString = "";
-
-      // Get filter values
-      selectOptions.forEach((item, index) => {
-        if (item.value && item.value !== "") {
-          if (index !== 0) {
-            filterString += " ";
-          }
-
-          // Build filter value options
-          filterString += item.value;
-        }
-      });
-
-      console.log("filterString: ", filterString);
-      // Filter datatable --- official docs reference: https://datatables.net/reference/api/search()
-      datatable.search(filterString).draw();
-    });
-  };
-
-  // Reset Filter
-  var handleResetForm = () => {
-    // Select reset button
-    const resetButton = document.querySelector(
-      '[data-kt-table-filter="reset"]'
-    );
-
-    // Reset datatable
-    resetButton.addEventListener("click", function () {
-      // Select filter options
-      const filterForm = document.querySelector(
-        '[data-kt-table-filter="form"]'
-      );
-      const selectOptions = filterForm.querySelectorAll("select");
-
-      // Reset select2 values -- more info: https://select2.org/programmatic-control/add-select-clear-items
-      selectOptions.forEach((select) => {
-        $(select).val("").trigger("change");
-      });
-
-      // Reset datatable --- official docs reference: https://datatables.net/reference/api/search()
-      datatable.search("").draw();
-    });
-  };
-
-  // Delete subscription
-  var handleDeleteRows = (_url_delete = "", _language) => {
-    // Select all delete buttons
-    const deleteButtons = table.querySelectorAll(
-      '[data-kt-table-filter="delete_row"]'
-    );
-    const url_delete = _url_delete;
-
-    deleteButtons.forEach((d) => {
-      // Delete button on click
-      // console.log('url-delete', url_delete)
-      $(d).attr("data-url", url_delete);
-      d.addEventListener("click", function (e) {
-        e.preventDefault();
-        // Select parent row
-        // const parent = e.target.closest('tr');
-
-        let id = $(this).attr("data-id");
-        // let url_delete = $(this).attr('data-url')
-
-        // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
-        Swal.fire({
-          text:
-            _language.confirmDelete ||
-            "Are you sure you want to delete this(these) record?",
-          icon: "warning",
-          showCancelButton: true,
-          buttonsStyling: false,
-          confirmButtonText: "Yes, delete!",
-          cancelButtonText: "No, cancel",
-          customClass: {
-            confirmButton: "btn fw-bold btn-danger",
-            cancelButton: "btn fw-bold btn-active-light-primary",
-          },
-        }).then(function (result) {
-          if (result.value) {
-            $.ajax({
-              url: _url_delete,
-              headers: {
-                "X-CSRFToken": $('[name="csrfmiddlewaretoken"]').val(),
-                Authorization: "Basic cm9vdDox",
-                "Content-Type": "application/json",
-              },
-              method: "delete",
-              dataType: "text",
-              contentType: false,
-              processData: false,
-              data: JSON.stringify([id]),
-              success: function (response) {
-                Swal.fire({
-                  text: "You have deleted!",
-                  icon: "success",
-                  buttonsStyling: false,
-                  confirmButtonText: "Ok, got it!",
-                  customClass: {
-                    confirmButton: "btn fw-bold btn-primary",
-                  },
-                })
-                  .then(function () {
-                    // Remove current row
-                    // datatable.row($(parent)).remove().draw();
-                    datatable.draw();
-                  })
-                  .then(function () {
-                    // Detect checked checkboxes
-                    toggleToolbars();
-                  });
-              },
-              error: function (request, status, error) {
-                Swal.fire({
-                  title: "Notice",
-                  text: "Something is error: " + error,
-                  icon: "error",
-                  type: "error",
-                }).then(function () {});
-              },
-            });
-          } else if (result.dismiss === "cancel") {
-            Swal.fire({
-              text: "This record was not deleted.",
-              icon: "error",
-              buttonsStyling: false,
-              confirmButtonText: "Ok, got it!",
-              customClass: {
-                confirmButton: "btn fw-bold btn-primary",
-              },
-            });
-          }
-        });
-      });
-    });
-  };
-
-  // Init toggle toolbar
-  var initToggleToolbar = (_url_delete = "") => {
-    // Toggle selected action toolbar
-    // Select all checkboxes
-    const checkboxes = table.querySelectorAll('[type="checkbox"]');
-
-    // Select elements
-    toolbarBase = document.querySelector('[data-kt-table-toolbar="base"]');
-    toolbarSelected = document.querySelector(
-      '[data-kt-table-toolbar="selected"]'
-    );
-    selectedCount = document.querySelector(
-      '[data-kt-table-select="selected_count"]'
-    );
-    const deleteSelected = document.querySelector(
-      '[data-kt-table-select="delete_selected"]'
-    );
-
-    // Toggle delete selected toolbar
-    checkboxes.forEach((c) => {
-      // Checkbox on click event
-      c.addEventListener("click", function () {
-        setTimeout(function () {
-          toggleToolbars();
-        }, 50);
-      });
-    });
-
-    // Deleted selected rows
-    deleteSelected.addEventListener("click", function () {
-      // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
-      Swal.fire({
-        text: "Are you sure you want to delete selected records?",
-        icon: "warning",
-        showCancelButton: true,
-        buttonsStyling: false,
-        confirmButtonText: "Yes, delete!",
-        cancelButtonText: "No, cancel",
-        customClass: {
-          confirmButton: "btn fw-bold btn-danger",
-          cancelButton: "btn fw-bold btn-active-light-primary",
-        },
-      }).then(function (result) {
-        if (result.value) {
-          $.ajax({
-            url: _url_delete,
-            headers: {
-              "X-CSRFToken": $('[name="csrfmiddlewaretoken"]').val(),
-              Authorization: "Basic cm9vdDox",
-              "Content-Type": "application/json",
-            },
-            method: "delete",
-            dataType: "text",
-            contentType: false,
-            processData: false,
-            data: JSON.stringify(arr_selected),
-            success: function (response) {
-              Swal.fire({
-                text: "You have deleted all selected records!.",
-                icon: "success",
-                buttonsStyling: false,
-                confirmButtonText: "Ok, got it!",
-                customClass: {
-                  confirmButton: "btn fw-bold btn-primary",
+                    },
                 },
-              })
-                .then(function () {
-                  // Remove all selected customers
-                  checkboxes.forEach((c) => {
-                    if (c.checked) {
-                      datatable
-                        .row($(c.closest("tbody tr")))
-                        .remove()
-                        .draw();
+            ],
+            processing: true,
+            dom: "lrtip", // DataTable element position
+            language: {
+                processing:
+                    '<div data-kt-indicator="on"><span class="indicator-progress">\n' +
+                    '        Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>\n' +
+                    "    </span></div>",
+            },
+            rowCallback: function (row, data) {
+                $(row)
+                    .find("input.asset-checkbox-select")
+                    .prop(
+                        "checked",
+                        arr_selected.findIndex((item) => item === data["ID"]) > -1
+                    );
+            },
+            drawCallback: function (settings) {
+                console.log();
+                if (settings && settings["json"]) {
+                    totalCount = parseInt(settings["json"]["recordsFiltered"]);
+                    if (settings["json"]["options"]) {
+                        initFilterForm(settings["json"]["options"]);
                     }
-                  });
+                }
 
-                  // Remove header checked box
-                  const headerCheckbox =
-                    table.querySelectorAll('[type="checkbox"]')[0];
-                  headerCheckbox.checked = false;
-                })
-                .then(function () {
-                  arr_selected = [];
-                  toggleToolbars(); // Detect checked checkboxes
-                  initToggleToolbar(_url_delete); // Re-init toolbar to recalculate checkboxes
+                $(document).on("change", 'input[type="checkbox"]', function () {
+                    if ($(this).is(":checked")) {
+                        arr_selected.push($(this).val());
+                    } else {
+                        arr_selected.splice(arr_selected.indexOf($(this).val()), 1);
+                    }
+                    // console.log('arr_selected: ', arr_selected);
                 });
             },
-            error: function (request, status, error) {
-              Swal.fire({
-                title: "Notice",
-                text: "Something is error: " + error,
-                icon: "error",
-                type: "error",
-              }).then(function () {});
-            },
-          });
-        } else if (result.dismiss === "cancel") {
-          // Swal.fire({
-          //     text: "Selected customers was not deleted.",
-          //     icon: "error",
-          //     buttonsStyling: false,
-          //     confirmButtonText: "Ok, got it!",
-          //     customClass: {
-          //         confirmButton: "btn fw-bold btn-primary",
-          //     }
-          // });
-        }
-      });
-    });
-  };
+        };
+        // Init datatable --- more info on datatables: https://datatables.net/manual/
+        datatable = $(table).DataTable({...defaultOptions, ...options});
 
-  // Toggle toolbars
-  const toggleToolbars = () => {
-    // Select refreshed checkbox DOM elements
-    const allCheckboxes = table.querySelectorAll('tbody td [type="checkbox"]');
-    // console.log('allcheckbox', allCheckboxes)
-    // Detect checkboxes state & count
-    let checkedState = false;
-    let count = 0;
+        // Re-init functions on every table re-draw -- more info: https://datatables.net/reference/event/draw
+        datatable.on("draw", function () {
+            initToggleToolbar(endpoint.delete);
+            handleDeleteRows(endpoint.delete, language);
+            toggleToolbars();
+        });
 
-    // Count checked boxes
-    allCheckboxes.forEach((c) => {
-      if (c.checked) {
-        checkedState = true;
-        count++;
-      }
-    });
+        $('input[data-kt-check="true"]').on("change", function () {
+            if (this.checked) {
+                $('tbody td [type="checkbox"]').prop("checked", true);
+            } else {
+                $('tbody td [type="checkbox"]').prop("checked", false);
+            }
+            toggleToolbars();
+        });
+
+        $('#kt_table_settings tbody td input[type="checkbox"]').on(
+            "change",
+            function () {
+                toggleToolbars();
+            }
+        );
+
+        return datatable;
+    };
+
+    // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
+    var handleSearchDatatable = () => {
+        const filterSearch = document.querySelector(
+            '[data-kt-table-filter="search"]'
+        );
+        filterSearch.addEventListener("keyup", function (e) {
+            datatable.search(e.target.value).draw();
+        });
+    };
+
+    // init Filter Form
+    const initFilterForm = (options) => {
+        const filterForm = document.querySelector('[data-kt-table-filter="form"]');
+        const filterBody = filterForm.querySelector(
+            '[data-kt-table-filter="body"]'
+        );
+        options.forEach(function (item){
+            console.log(item);
+            filterBody.append(item);
+        })
+    }
+    // Filter Datatable
+    var handleFilterDatatable = () => {
+        // Select filter options
+        const filterForm = document.querySelector('[data-kt-table-filter="form"]');
+        const filterButton = filterForm.querySelector(
+            '[data-kt-table-filter="filter"]'
+        );
+        const selectOptions = filterForm.querySelectorAll("select");
+
+        // Filter datatable on submit
+        filterButton.addEventListener("click", function () {
+            var filterString = "";
+
+            // Get filter values
+            selectOptions.forEach((item, index) => {
+                if (item.value && item.value !== "") {
+                    if (index !== 0) {
+                        filterString += " ";
+                    }
+
+                    // Build filter value options
+                    filterString += item.value;
+                }
+            });
+
+            console.log("filterString: ", filterString);
+            // Filter datatable --- official docs reference: https://datatables.net/reference/api/search()
+            datatable.search(filterString).draw();
+        });
+    };
+
+    // Reset Filter
+    var handleResetForm = () => {
+        // Select reset button
+        const resetButton = document.querySelector(
+            '[data-kt-table-filter="reset"]'
+        );
+
+        // Reset datatable
+        resetButton.addEventListener("click", function () {
+            // Select filter options
+            const filterForm = document.querySelector(
+                '[data-kt-table-filter="form"]'
+            );
+            const selectOptions = filterForm.querySelectorAll("select");
+
+            // Reset select2 values -- more info: https://select2.org/programmatic-control/add-select-clear-items
+            selectOptions.forEach((select) => {
+                $(select).val("").trigger("change");
+            });
+
+            // Reset datatable --- official docs reference: https://datatables.net/reference/api/search()
+            datatable.search("").draw();
+        });
+    };
+
+    // Delete subscription
+    var handleDeleteRows = (_url_delete = "", _language) => {
+        // Select all delete buttons
+        const deleteButtons = table.querySelectorAll(
+            '[data-kt-table-filter="delete_row"]'
+        );
+        const url_delete = _url_delete;
+
+        deleteButtons.forEach((d) => {
+            // Delete button on click
+            // console.log('url-delete', url_delete)
+            $(d).attr("data-url", url_delete);
+            d.addEventListener("click", function (e) {
+                e.preventDefault();
+                // Select parent row
+                // const parent = e.target.closest('tr');
+
+                let id = $(this).attr("data-id");
+                // let url_delete = $(this).attr('data-url')
+
+                // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
+                Swal.fire({
+                    text:
+                        _language.confirmDelete ||
+                        "Are you sure you want to delete this(these) record?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    buttonsStyling: false,
+                    confirmButtonText: "Yes, delete!",
+                    cancelButtonText: "No, cancel",
+                    customClass: {
+                        confirmButton: "btn fw-bold btn-danger",
+                        cancelButton: "btn fw-bold btn-active-light-primary",
+                    },
+                }).then(function (result) {
+                    if (result.value) {
+                        $.ajax({
+                            url: _url_delete,
+                            headers: {
+                                "X-CSRFToken": $('[name="csrfmiddlewaretoken"]').val(),
+                                Authorization: "Basic cm9vdDox",
+                                "Content-Type": "application/json",
+                            },
+                            method: "delete",
+                            dataType: "text",
+                            contentType: false,
+                            processData: false,
+                            data: JSON.stringify([id]),
+                            success: function (response) {
+                                Swal.fire({
+                                    text: "You have deleted!",
+                                    icon: "success",
+                                    buttonsStyling: false,
+                                    confirmButtonText: "Ok, got it!",
+                                    customClass: {
+                                        confirmButton: "btn fw-bold btn-primary",
+                                    },
+                                })
+                                    .then(function () {
+                                        // Remove current row
+                                        // datatable.row($(parent)).remove().draw();
+                                        datatable.draw();
+                                    })
+                                    .then(function () {
+                                        // Detect checked checkboxes
+                                        toggleToolbars();
+                                    });
+                            },
+                            error: function (request, status, error) {
+                                Swal.fire({
+                                    title: "Notice",
+                                    text: "Something is error: " + error,
+                                    icon: "error",
+                                    type: "error",
+                                }).then(function () {
+                                });
+                            },
+                        });
+                    } else if (result.dismiss === "cancel") {
+                        Swal.fire({
+                            text: "This record was not deleted.",
+                            icon: "error",
+                            buttonsStyling: false,
+                            confirmButtonText: "Ok, got it!",
+                            customClass: {
+                                confirmButton: "btn fw-bold btn-primary",
+                            },
+                        });
+                    }
+                });
+            });
+        });
+    };
+
+    // Init toggle toolbar
+    var initToggleToolbar = (_url_delete = "") => {
+        // Toggle selected action toolbar
+        // Select all checkboxes
+        const checkboxes = table.querySelectorAll('[type="checkbox"]');
+
+        // Select elements
+        toolbarBase = document.querySelector('[data-kt-table-toolbar="base"]');
+        toolbarSelected = document.querySelector(
+            '[data-kt-table-toolbar="selected"]'
+        );
+        selectedCount = document.querySelector(
+            '[data-kt-table-select="selected_count"]'
+        );
+        const deleteSelected = document.querySelector(
+            '[data-kt-table-select="delete_selected"]'
+        );
+
+        // Toggle delete selected toolbar
+        checkboxes.forEach((c) => {
+            // Checkbox on click event
+            c.addEventListener("click", function () {
+                setTimeout(function () {
+                    toggleToolbars();
+                }, 50);
+            });
+        });
+
+        // Deleted selected rows
+        deleteSelected.addEventListener("click", function () {
+            // SweetAlert2 pop up --- official docs reference: https://sweetalert2.github.io/
+            Swal.fire({
+                text: "Are you sure you want to delete selected records?",
+                icon: "warning",
+                showCancelButton: true,
+                buttonsStyling: false,
+                confirmButtonText: "Yes, delete!",
+                cancelButtonText: "No, cancel",
+                customClass: {
+                    confirmButton: "btn fw-bold btn-danger",
+                    cancelButton: "btn fw-bold btn-active-light-primary",
+                },
+            }).then(function (result) {
+                if (result.value) {
+                    $.ajax({
+                        url: _url_delete,
+                        headers: {
+                            "X-CSRFToken": $('[name="csrfmiddlewaretoken"]').val(),
+                            Authorization: "Basic cm9vdDox",
+                            "Content-Type": "application/json",
+                        },
+                        method: "delete",
+                        dataType: "text",
+                        contentType: false,
+                        processData: false,
+                        data: JSON.stringify(arr_selected),
+                        success: function (response) {
+                            Swal.fire({
+                                text: "You have deleted all selected records!.",
+                                icon: "success",
+                                buttonsStyling: false,
+                                confirmButtonText: "Ok, got it!",
+                                customClass: {
+                                    confirmButton: "btn fw-bold btn-primary",
+                                },
+                            })
+                                .then(function () {
+                                    // Remove all selected customers
+                                    checkboxes.forEach((c) => {
+                                        if (c.checked) {
+                                            datatable
+                                                .row($(c.closest("tbody tr")))
+                                                .remove()
+                                                .draw();
+                                        }
+                                    });
+
+                                    // Remove header checked box
+                                    const headerCheckbox =
+                                        table.querySelectorAll('[type="checkbox"]')[0];
+                                    headerCheckbox.checked = false;
+                                })
+                                .then(function () {
+                                    arr_selected = [];
+                                    toggleToolbars(); // Detect checked checkboxes
+                                    initToggleToolbar(_url_delete); // Re-init toolbar to recalculate checkboxes
+                                });
+                        },
+                        error: function (request, status, error) {
+                            Swal.fire({
+                                title: "Notice",
+                                text: "Something is error: " + error,
+                                icon: "error",
+                                type: "error",
+                            }).then(function () {
+                            });
+                        },
+                    });
+                } else if (result.dismiss === "cancel") {
+                    // Swal.fire({
+                    //     text: "Selected customers was not deleted.",
+                    //     icon: "error",
+                    //     buttonsStyling: false,
+                    //     confirmButtonText: "Ok, got it!",
+                    //     customClass: {
+                    //         confirmButton: "btn fw-bold btn-primary",
+                    //     }
+                    // });
+                }
+            });
+        });
+    };
 
     // Toggle toolbars
-    if (checkedState) {
-      selectedCount.innerHTML = count;
-      toolbarBase.classList.add("d-none");
-      toolbarSelected.classList.remove("d-none");
-    } else {
-      toolbarBase.classList.remove("d-none");
-      toolbarSelected.classList.add("d-none");
-    }
+    const toggleToolbars = () => {
+        // Select refreshed checkbox DOM elements
+        const allCheckboxes = table.querySelectorAll('tbody td [type="checkbox"]');
+        // console.log('allcheckbox', allCheckboxes)
+        // Detect checkboxes state & count
+        let checkedState = false;
+        let count = 0;
 
-    $('input[data-kt-check="true"]').prop("checked", totalCount === count);
-  };
+        // Count checked boxes
+        allCheckboxes.forEach((c) => {
+            if (c.checked) {
+                checkedState = true;
+                count++;
+            }
+        });
 
-  return {
-    // Public functions
-    init: function (
-      _tableId = "",
-      _options = {},
-      _endpoint = {
-        delete: "",
-      },
-      _language = {},
-      _extra_columundefs = [
-          {
-          searchable: false, // Disable ordering on column 0 (checkbox)
-          targets: 1,
+        // Toggle toolbars
+        if (checkedState) {
+            selectedCount.innerHTML = count;
+            toolbarBase.classList.add("d-none");
+            toolbarSelected.classList.remove("d-none");
+        } else {
+            toolbarBase.classList.remove("d-none");
+            toolbarSelected.classList.add("d-none");
+        }
 
+        $('input[data-kt-check="true"]').prop("checked", totalCount === count);
+    };
+
+    return {
+        // Public functions
+        init: function (
+            _tableId = "",
+            _options = {},
+            _endpoint = {
+                delete: "",
+            },
+            _language = {},
+            _extra_columundefs = [
+                {
+                    searchable: false, // Disable ordering on column 0 (checkbox)
+                    targets: 1,
+
+                },
+            ]
+        ) {
+            initTable(_tableId, _options, _endpoint, _language);
+            // initToggleToolbar(); // it called in event draw, comment it
+            handleSearchDatatable();
+            handleResetForm();
+            // handleDeleteRows(_endpoint.delete); // it called in event draw, comment it
+            handleFilterDatatable();
+
+            return datatable;
         },
-      ]
-    ) {
-      initTable(_tableId, _options, _endpoint, _language);
-      // initToggleToolbar(); // it called in event draw, comment it
-      handleSearchDatatable();
-      handleResetForm();
-      // handleDeleteRows(_endpoint.delete); // it called in event draw, comment it
-      handleFilterDatatable();
-
-      return datatable;
-    },
-  };
+    };
 })();
