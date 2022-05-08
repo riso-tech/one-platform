@@ -15,6 +15,7 @@ class MetaModel(Model):
         avatar_field = None
         name_field = None
         title_field = None
+        protect_flag_field = None
 
     @property
     def as_avatar(self):
