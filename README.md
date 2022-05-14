@@ -1,91 +1,26 @@
-# Riso Tech one platform
-
-Behold My Awesome Project!
+# Riso Tech One platform
 
 [![Built with Cookiecutter Django](https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg?logo=cookiecutter)](https://github.com/cookiecutter/cookiecutter-django/)
+[![Template Metronic](https://img.shields.io/badge/Template-Metronic-brightgreen?logo=html5)](https://1.envato.market/NKe19P)
 [![Black code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
+[![License](https://img.shields.io/github/license/riso-tech/one-platform)]()
 
-License: MIT
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/riso-tech/one-platform/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/riso-tech/one-platform/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/riso-tech/one-platform/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/riso-tech/one-platform/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/riso-tech/one-platform/badges/build.png?b=master)](https://scrutinizer-ci.com/g/riso-tech/one-platform/build-status/master)
+[![Code Intelligence Status](https://scrutinizer-ci.com/g/riso-tech/one-platform/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
 
-## Settings
+**One Platform** is a framework for jumpstarting production-ready Django
+projects quickly.
 
-Moved to [settings](http://cookiecutter-django.readthedocs.io/en/latest/settings.html).
+- Based on Django Cookiecutter
+- Integrate with modern template Metronic
+- Built-in Functions help you start new project quickly
+- Documentation: https://github.com/riso-tech/one-platform/tree/master/docs/README.md
+- Features: https://github.com/riso-tech/one-platform/tree/master/docs/FEATURES.md
 
-## Basic Commands
+## Screenshots
 
-### Setting Up Your Users
-
--   To create a **normal user account**, just go to Sign Up and fill out the form. Once you submit it, you'll see a "Verify Your E-mail Address" page. Go to your console to see a simulated email verification message. Copy the link into your browser. Now the user's email should be verified and ready to go.
-
--   To create a **superuser account**, use this command:
-
-        $ python manage.py createsuperuser
-
-For convenience, you can keep your normal user logged in on Chrome and your superuser logged in on Firefox (or similar), so that you can see how the site behaves for both kinds of users.
-
-### Type checks
-
-Running type checks with mypy:
-
-    $ mypy one
-
-### Test coverage
-
-To run the tests, check your test coverage, and generate an HTML coverage report:
-
-    $ coverage run -m pytest --create-db -v
-    $ coverage html
-    $ open htmlcov/index.html
-
-#### Running tests with pytest
-
-    $ pytest
-
-### Live reloading and Sass CSS compilation
-
-Moved to [Live reloading and SASS compilation](https://cookiecutter-django.readthedocs.io/en/latest/developing-locally.html#sass-compilation-live-reloading).
-
-### Celery
-
-This app comes with Celery.
-
-To run a celery worker:
-
-``` bash
-cd one
-celery -A config.celery_app worker -l info
-```
-
-Please note: For Celery's import magic to work, it is important *where* the celery commands are run. If you are in the same folder with *manage.py*, you should be right.
-
-### Email Server
-
-In development, it is often nice to be able to see emails that are being sent from your application. For that reason local SMTP server [MailHog](https://github.com/mailhog/MailHog) with a web interface is available as docker container.
-
-Container mailhog will start automatically when you will run all docker containers.
-Please check [cookiecutter-django Docker documentation](http://cookiecutter-django.readthedocs.io/en/latest/deployment-with-docker.html) for more details how to start all containers.
-
-With MailHog running, to view messages that are sent by your application, open your browser and go to `http://127.0.0.1:8025`
-
-### Sentry
-
-Sentry is an error logging aggregator service. You can sign up for a free account at <https://sentry.io/signup/?code=cookiecutter> or download and host it yourself.
-The system is set up with reasonable defaults, including 404 logging and integration with the WSGI application.
-
-You must set the DSN url in production.
-
-## Deployment
-
-The following details how to deploy this application.
-
-### Docker
-
-See detailed [cookiecutter-django Docker documentation](http://cookiecutter-django.readthedocs.io/en/latest/deployment-with-docker.html).
-### Custom Bootstrap Compilation
-
-The generated CSS is set up with automatic Bootstrap recompilation with variables of your choice.
-Bootstrap v5 is installed using npm and customised by tweaking your variables in `static/sass/custom_bootstrap_vars`.
-
-You can find a list of available variables [in the bootstrap source](https://github.com/twbs/bootstrap/blob/main/scss/_variables.scss), or get explanations on them in the [Bootstrap docs](https://getbootstrap.com/docs/5.1/customize/sass/).
-
-Bootstrap's javascript as well as its dependencies is concatenated into a single file: `static/js/vendors.js`.
+<img src="./one/static/images/screenshots/01.png" alt="User Profile in Dark">
+<img src="./one/static/images/screenshots/02.png" alt="User Profile in Light">
+<img src="./one/static/images/screenshots/03.png" alt="Site setting extend django site">
