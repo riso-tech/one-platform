@@ -271,6 +271,17 @@
   });
 </script>
 <!--end::Theme mode-->
+
+<!--begin::Menu Controller-->
+<script>
+  function menu_item_click(item) {
+    let url = item.getAttribute('data-url');
+    KTCookie.set("selected_menu_item", url);
+    window.location.replace(url);
+  }
+</script>
+<!--end::Menu Controller-->
+
 <!--begin::Webpush auto click-->
 <script>
   $(document).ready(function () {

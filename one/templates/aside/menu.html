@@ -16,6 +16,7 @@
             class="menu-section text-muted text-uppercase fs-8 ls-1">{% translate 'Configurations' %}</span>
         </div>
       </div>
+
       <!--TODO: Menu management-->
       {% if ENABLE_MENU_SETTINGS %}
         <div class="menu-item">
@@ -69,7 +70,6 @@
         </div>
       {% endif %}
 
-
       <div data-kt-menu-trigger="click" class="menu-item menu-accordion mb-1">
         <span class="menu-link">
           <span class="menu-icon">
@@ -101,7 +101,7 @@
             </a>
           </div>
           <div class="menu-item">
-            <a class="menu-link" href="{% url 'auth:group-list' %}">
+            <a class="menu-link" href="#" data-url="{% url 'auth:group-list' %}" onclick="menu_item_click(this)">
                 <span class="menu-bullet">
                   <span class="bullet bullet-dot"></span>
                 </span>
@@ -153,3 +153,21 @@
   <!--end::Menu-->
 </div>
 <!--end::Aside Menu-->
+<script defer>
+  KTMenu.createInstances("#kt_aside_menu_wrapper");
+  var menuElement = document.querySelector("#kt_aside_menu_wrapper");
+  var menu = KTMenu.getInstance(menuElement);
+  var data_url = KTCookie.get("selected_menu_item");
+  var item = document.querySelector(`[data-url='${data_url}']`);
+  if (data_url != '{{ request.path }}') {
+    menu.reset(item);
+    KTCookie.remove("selected_menu_item");
+  } else {
+    var parentItemElements = menu.getItemParentElements(item);
+    var parentItem = parentItemElements[0];
+    menu.show(parentItem);
+    menu.show(item);
+    $(item).addClass('active');
+    $(parentItem).addClass('here');
+  }
+</script>
