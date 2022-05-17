@@ -2,7 +2,7 @@ import datetime
 from uuid import uuid4
 
 from django.conf import settings
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, UserManager
 from django.core.cache import cache
 from django.db.models import CharField, UUIDField
 from django.urls import reverse
@@ -17,6 +17,8 @@ class User(BaseModel, AbstractUser):
     If adding fields that need to be filled at user signup,
     check forms.SignupForm and forms.SocialSignupForms accordingly.
     """
+
+    objects = UserManager()
 
     id = UUIDField(primary_key=True, default=uuid4, editable=False)
     #: First and last name do not cover name patterns around the globe

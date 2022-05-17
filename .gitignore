@@ -333,3 +333,4 @@ project.min.css
 vendors.js
 *.min.js
 .env
+/.idea/codeStyles/codeStyleConfig.xml
