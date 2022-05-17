@@ -6,6 +6,8 @@ from django.contrib.sites.models import Site
 from django.http import HttpRequest
 
 from one.contrib.sites.tests.factories import SiteFactory
+from one.emails.models import AllauthTemplate
+from one.emails.tests.factories import AllauthTemplateFactory
 from one.users.models import User
 from one.users.tests.factories import UserFactory
 
@@ -13,6 +15,11 @@ from one.users.tests.factories import UserFactory
 @pytest.fixture(autouse=True)
 def media_storage(settings, tmpdir):
     settings.MEDIA_ROOT = tmpdir.strpath
+
+
+@pytest.fixture
+def allauth() -> AllauthTemplate:
+    return AllauthTemplateFactory()
 
 
 @pytest.fixture

@@ -7,6 +7,7 @@ from django.db.models import (
     CharField,
     DateTimeField,
     ForeignKey,
+    Manager,
     Model,
     UUIDField,
 )
@@ -14,7 +15,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from rest_framework.serializers import ModelSerializer
 
-from .managers import LingualManager
+from .managers import FormManager
 
 
 class MetaModel(Model):
@@ -89,7 +90,26 @@ class MetaModel(Model):
         ]
 
 
-class BaseModel(MetaModel):
+class FormModel(Model):
+    objects = Manager()
+    form_objects = FormManager()
+
+    class Meta:
+        abstract = True
+
+    class FormMeta:
+        exclude_fields = None
+        fields = None
+        read_only_fields = None
+        hidden_fields = None
+
+    @property
+    def update_form(self):
+        for_class = type(self).form_objects.get_form_class()
+        return for_class(instance=self, prefix=self.id)
+
+
+class BaseModel(FormModel, MetaModel):
     """
     Abstract Base model
 
@@ -156,7 +176,8 @@ class LingualModel(BaseModel):
         choices=settings.LANGUAGES,
         default=settings.VIETNAMESE,
     )
-    lingual_objects = LingualManager()
+
+    # lingual_objects = LingualManager()
 
     class Meta:
         abstract = True
