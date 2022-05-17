@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-02 21:52+0700\n"
+"POT-Creation-Date: 2022-05-15 00:35+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,14 +34,14 @@ msgstr ""
 msgid "Mobile logo of site"
 msgstr ""
 
-#: one/contrib/sites/settings/views.py:15
+#: one/contrib/sites/settings/views.py:16
 msgid "Information successfully updated"
 msgstr ""
 
-#: one/contrib/sites/settings/views.py:26
+#: one/contrib/sites/settings/views.py:27
 msgid "Site Setting"
 msgstr ""
 
-#: one/contrib/sites/settings/views.py:52
+#: one/contrib/sites/settings/views.py:56
 msgid "Step Images has error"
 msgstr ""

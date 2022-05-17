@@ -8,7 +8,7 @@ from django.db.models import CharField, UUIDField
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-from one.components.models import BaseModel
+from one.components.models.models import BaseModel
 
 
 class User(BaseModel, AbstractUser):

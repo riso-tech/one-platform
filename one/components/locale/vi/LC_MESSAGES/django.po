@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-02 21:52+0700\n"
+"POT-Creation-Date: 2022-05-15 00:35+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,14 +22,18 @@ msgstr ""
 msgid "Components"
 msgstr ""
 
-#: one/components/models.py:95
+#: one/components/models/models.py:105
 msgid "Created on"
 msgstr ""
 
-#: one/components/models.py:98
+#: one/components/models/models.py:108
 msgid "Last modified on"
 msgstr ""
 
-#: one/components/models.py:102
+#: one/components/models/models.py:112
 msgid "Created by"
+msgstr ""
+
+#: one/components/models/models.py:155
+msgid "Language"
 msgstr ""

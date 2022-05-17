@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-05-02 21:52+0700\n"
+"POT-Creation-Date: 2022-05-15 00:35+0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,11 +28,11 @@ msgstr ""
 msgid "English"
 msgstr ""
 
-#: config/settings/base.py:366
+#: config/settings/base.py:367
 msgid "Dark theme"
 msgstr ""
 
-#: config/settings/base.py:367
+#: config/settings/base.py:368
 msgid "Light theme"
 msgstr ""
 
@@ -218,7 +218,7 @@ msgstr ""
 
 #: one/templates/account/password_reset.html:43
 #: one/templates/account/password_reset_from_key.html:111
-#: one/templates/account/signup.html:127 one/templates/sites/site_form.html:126
+#: one/templates/account/signup.html:127 one/templates/sites/site_form.html:198
 #: one/templates/users/user_detail.html:352
 #: one/templates/users/user_detail.html:469
 #: one/templates/users/user_detail.html:570
@@ -398,41 +398,12 @@ msgstr ""
 msgid "Setting"
 msgstr ""
 
-#: one/templates/aside/menu.html:16
-msgid "Configurations"
-msgstr ""
-
-#: one/templates/aside/menu.html:23 one/templates/aside/menu.html:41
-#: one/templates/defaults/_list.html:4 one/templates/layout/footer.html:16
-msgid "Settings"
-msgstr ""
-
-#: one/templates/aside/menu.html:49 one/templates/aside/menu.html:67
-msgid "Email Templates"
-msgstr ""
-
-#: one/templates/aside/menu.html:90
-msgid "User Management"
-msgstr ""
-
-#: one/templates/aside/menu.html:99
-msgid "Users"
-msgstr ""
-
-#: one/templates/aside/menu.html:107
-msgid "Groups"
-msgstr ""
-
-#: one/templates/aside/menu.html:135
-msgid "Pages"
-msgstr ""
-
-#: one/templates/aside/menu.html:144
-msgid "FlatPage"
-msgstr ""
-
 #: one/templates/base.html:98
 msgid "We need your attention!"
+msgstr ""
+
+#: one/templates/defaults/_list.html:4 one/templates/layout/footer.html:16
+msgid "Settings"
 msgstr ""
 
 #: one/templates/defaults/_list.html:94
@@ -454,7 +425,7 @@ msgstr ""
 msgid "Remove image"
 msgstr ""
 
-#: one/templates/drawers/_debug-drawer.html:20
+#: one/templates/drawers/debug-drawer.html:19
 msgid "Debug toolbars"
 msgstr ""
 
@@ -465,12 +436,16 @@ msgstr ""
 
 #: one/templates/forms/one-col-form.html:36
 #: one/templates/forms/two-col-form.html:35
-#: one/templates/sites/site_form.html:123
+#: one/templates/sites/site_form.html:195
 msgid "Save Changes"
 msgstr ""
 
 #: one/templates/header/breadcrumb.html:17
 msgid "Danh sách"
+msgstr ""
+
+#: one/templates/partials/table/_table.html:25
+msgid "Actions"
 msgstr ""
 
 #: one/templates/sites/site_form.html:35
@@ -489,11 +464,19 @@ msgstr ""
 msgid "Favicon, Logos"
 msgstr ""
 
-#: one/templates/sites/site_form.html:115
+#: one/templates/sites/site_form.html:90
+msgid "Email Templates"
+msgstr ""
+
+#: one/templates/sites/site_form.html:94
+msgid "Base emails for authenticate"
+msgstr ""
+
+#: one/templates/sites/site_form.html:187
 msgid "Back"
 msgstr ""
 
-#: one/templates/sites/site_form.html:131
+#: one/templates/sites/site_form.html:203
 msgid "Continue"
 msgstr ""
 

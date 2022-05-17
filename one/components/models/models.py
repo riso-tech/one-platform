@@ -1,10 +1,20 @@
 from random import randint
 from uuid import uuid4
 
-from django.db.models import CASCADE, DateTimeField, ForeignKey, Model, UUIDField
+from django.conf import settings
+from django.db.models import (
+    CASCADE,
+    CharField,
+    DateTimeField,
+    ForeignKey,
+    Model,
+    UUIDField,
+)
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from rest_framework.serializers import ModelSerializer
+
+from .managers import LingualManager
 
 
 class MetaModel(Model):
@@ -132,3 +142,26 @@ class BaseModel(MetaModel):
 
         self.time_modified = timezone.now()
         return super().save(*args, **kwargs)
+
+
+class LingualModel(BaseModel):
+    """
+    Abstract Multi language Model
+
+    language: CharField, language of object
+    """
+
+    language = CharField(
+        max_length=2,
+        verbose_name=_("Language"),
+        choices=settings.LANGUAGES,
+        default=settings.VIETNAMESE,
+    )
+    lingual_objects = LingualManager()
+
+    class Meta:
+        abstract = True
+
+    @property
+    def language_verbose(self):
+        return dict(settings.LANGUAGES)[self.language]

@@ -16,32 +16,40 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: one/contrib/sites/settings/apps.py:21
-msgid "Sites"
+#: one/emails/apps.py:11
+msgid "Emails"
 msgstr ""
 
-#: one/contrib/sites/settings/models.py:20
-msgid "Favicon of site"
+#: one/emails/constants.py:9
+msgid "allauth_signup"
+msgstr "Email Signup"
+
+#: one/emails/constants.py:10
+msgid "allauth_reset"
+msgstr "Email Reset Password"
+
+#: one/emails/constants.py:11
+msgid "allauth_confirm"
+msgstr "Email Account Confirmation"
+
+#: one/emails/constants.py:12
+msgid "allauth_unknown"
+msgstr "Email Unknown Account"
+
+#: one/emails/models.py:19
+msgid "Specific code for core app"
 msgstr ""
 
-#: one/contrib/sites/settings/models.py:26
-msgid "Logo of site"
+#: one/emails/models.py:26
+msgid "Subject of email"
 msgstr ""
 
-#: one/contrib/sites/settings/models.py:32
-msgid "Mobile logo of site"
+#: one/emails/models.py:27
+msgid "Is protected"
 msgstr ""
 
-#: one/contrib/sites/settings/views.py:16
-msgid "Information successfully updated"
-msgstr ""
-
-#: one/contrib/sites/settings/views.py:27
-msgid "Site Setting"
-msgstr ""
-
-#: one/contrib/sites/settings/views.py:56
-msgid "Step Images has error"
+#: one/emails/models.py:28
+msgid "Html content"
 msgstr ""

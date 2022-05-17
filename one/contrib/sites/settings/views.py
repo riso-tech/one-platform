@@ -6,6 +6,8 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import UpdateView
 
+from one.emails.models import AllauthTemplate
+
 from .forms import SettingForm
 
 
@@ -27,6 +29,9 @@ class SiteDetailView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
             "parent": None,
             "current": f"{_('Update for')} {self.object.name}",
         }
+        kwargs["allauth_templates"] = AllauthTemplate.lingual_objects.group_by_language(
+            order_by="code"
+        )
         if self.request.method == "POST":
             kwargs["setting_form"] = SettingForm(
                 self.request.POST, self.request.FILES, instance=self.object.setting
