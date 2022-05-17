@@ -16,10 +16,10 @@ class SiteDetailView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     fields = ["name", "domain"]
     success_message = _("Information successfully updated")
 
-    def get_success_url(self):
+    def get_success_url(self):  # noqa
         return reverse("settings:site")
 
-    def get_object(self):
+    def get_object(self):  # noqa
         return Site.objects.get_current()
 
     def get_context_data(self, **kwargs):
@@ -29,9 +29,7 @@ class SiteDetailView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
             "parent": None,
             "current": f"{_('Update for')} {self.object.name}",
         }
-        kwargs["allauth_templates"] = AllauthTemplate.lingual_objects.group_by_language(
-            order_by="code"
-        )
+        kwargs["allauth_templates"] = AllauthTemplate.objects.all()
         if self.request.method == "POST":
             kwargs["setting_form"] = SettingForm(
                 self.request.POST, self.request.FILES, instance=self.object.setting
@@ -45,7 +43,7 @@ class SiteDetailView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         Handle POST requests: instantiate a form instance with the passed
         POST variables and then check if it's valid.
         """
-        self.object = self.get_object()
+        self.object = self.get_object()  # noqa
         setting_form = SettingForm(
             self.request.POST, self.request.FILES, instance=self.object.setting
         )
