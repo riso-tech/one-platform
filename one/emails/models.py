@@ -35,3 +35,15 @@ class AllauthTemplate(LingualModel):
             "code",
             "language",
         )
+
+    class FormMeta:
+        exclude_fields = [
+            "code",
+            "is_protected",
+            "language",
+            "creator",
+            "last_modified_by",
+        ]
+        fields = None
+        hidden_fields = ["last_modified_by"]
+        readonly_field_processing = ["code"]
