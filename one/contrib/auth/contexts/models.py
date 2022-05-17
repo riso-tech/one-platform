@@ -2,7 +2,7 @@ from django.contrib.auth.models import Group
 from django.db.models import CASCADE, ImageField, Model, OneToOneField
 from django.utils.translation import gettext_lazy as _
 
-from one.components.models import MetaModel
+from one.components.models.models import MetaModel
 
 from .utils import group_context_images_directory_path
 
