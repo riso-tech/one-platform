@@ -1,0 +1,36 @@
+{% load i18n %}
+<!--begin::Form-->
+<form class="form" novalidate="novalidate" method="post"
+      action="{{ action_url }}" enctype="multipart/form-data">
+  {% csrf_token %}
+  <!--begin::Group-->
+  <div class="mb-5">
+    {% for field in form %}
+      {% include 'forms/one_row_field.html' %}
+    {% endfor %}
+  </div>
+  <!--end::Group-->
+
+  <!--begin::Actions-->
+  <div class="d-flex flex-stack">
+    <!--begin::Wrapper-->
+    <div class="me-2">
+    </div>
+    <!--end::Wrapper-->
+    <!--begin::Wrapper-->
+    <div>
+      <button type="submit" class="btn btn-primary">
+                      <span class="indicator-label">
+                          {% translate 'Save Changes' %}
+                      </span>
+        <span class="indicator-progress">
+                        {% translate "Please wait" %}...
+                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                      </span>
+      </button>
+    </div>
+    <!--end::Wrapper-->
+  </div>
+  <!--end::Actions-->
+</form>
+<!--end::Form-->

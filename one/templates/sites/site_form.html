@@ -6,215 +6,241 @@
 {% block content %}
   <!--begin::Content-->
   <div class="flex-lg-row-fluid">
-    <!--begin::Card-->
-    <div class="card">
-      <!--begin::Card body-->
-      <div class="card-body">
-        <!--begin::Stepper-->
-        <div class="stepper stepper-pills stepper-column d-flex flex-column flex-lg-row" id="site_setting_vertical">
-          <!--begin::Aside-->
-          <div class="d-flex flex-row-auto w-100 w-lg-300px">
-            <!--begin::Nav-->
-            <div class="stepper-nav flex-cente">
-              <!--begin::Step 1-->
-              <div class="stepper-item me-5 current" data-kt-stepper-element="nav" data-kt-stepper-action="step">
-                <!--begin::Line-->
-                <div class="stepper-line w-40px"></div>
-                <!--end::Line-->
 
-                <!--begin::Icon-->
-                <div class="stepper-icon w-40px h-40px">
-                  <i class="stepper-check fas fa-check"></i>
-                  <span class="stepper-number">1</span>
-                </div>
-                <!--end::Icon-->
+    <!--begin::Accordion-->
+    <div class="accordion" id="accordion_site_setting">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="accordion_site_setting_header_1">
+          <button class="accordion-button fs-4 fw-bold" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#accordion_site_setting_body_1" aria-expanded="true"
+                  aria-controls="accordion_site_setting_body_1">
+            {% translate 'Site Setting' %}
+          </button>
+        </h2>
+        <div id="accordion_site_setting_body_1" class="accordion-collapse collapse show"
+             aria-labelledby="accordion_site_setting_header_1" data-bs-parent="#accordion_site_setting">
+          <div class="accordion-body">
+            <!--begin::Card body-->
+            <div class="card-body">
+              <!--begin::Stepper-->
+              <div class="stepper stepper-pills stepper-column d-flex flex-column flex-lg-row"
+                   id="site_setting_vertical">
+                <!--begin::Aside-->
+                <div class="d-flex flex-row-auto w-100 w-lg-300px">
+                  <!--begin::Nav-->
+                  <div class="stepper-nav flex-cente">
 
-                <!--begin::Label-->
-                <div class="stepper-label">
-                  <h3 class="stepper-title">
-                    {% translate 'General' %}
-                  </h3>
+                    <!--begin::Step 1-->
+                    <div class="stepper-item me-5 current" data-kt-stepper-element="nav" data-kt-stepper-action="step">
+                      <!--begin::Line-->
+                      <div class="stepper-line w-40px"></div>
+                      <!--end::Line-->
 
-                  <div class="stepper-desc">
-                    {% translate 'Name and Domain' %}
-                  </div>
-                </div>
-                <!--end::Label-->
-              </div>
-              <!--end::Step 1-->
-
-              <!--begin::Step 2-->
-              <div class="stepper-item me-5" data-kt-stepper-element="nav" data-kt-stepper-action="step">
-                <!--begin::Line-->
-                <div class="stepper-line w-40px"></div>
-                <!--end::Line-->
-
-                <!--begin::Icon-->
-                <div class="stepper-icon w-40px h-40px">
-                  <i class="stepper-check fas fa-check"></i>
-                  <span class="stepper-number">2</span>
-                </div>
-                <!--begin::Icon-->
-
-                <!--begin::Label-->
-                <div class="stepper-label">
-                  <h3 class="stepper-title">
-                    {% translate 'Images' %}
-                  </h3>
-
-                  <div class="stepper-desc">
-                    {% translate 'Favicon, Logos' %}
-                  </div>
-                </div>
-                <!--end::Label-->
-              </div>
-              <!--end::Step 2-->
-
-
-              <!--begin::Step 3-->
-              <div class="stepper-item me-5" data-kt-stepper-element="nav" data-kt-stepper-action="step">
-                <!--begin::Line-->
-                <div class="stepper-line w-40px"></div>
-                <!--end::Line-->
-
-                <!--begin::Icon-->
-                <div class="stepper-icon w-40px h-40px">
-                  <i class="stepper-check fas fa-check"></i>
-                  <span class="stepper-number">3</span>
-                </div>
-                <!--begin::Icon-->
-
-                <!--begin::Label-->
-                <div class="stepper-label">
-                  <h3 class="stepper-title">
-                    {% translate 'Email Templates' %}
-                  </h3>
-
-                  <div class="stepper-desc">
-                    {% translate 'Base emails for authenticate' %}
-                  </div>
-                </div>
-                <!--end::Label-->
-              </div>
-              <!--end::Step 2-->
-
-
-            </div>
-            <!--end::Nav-->
-          </div>
-
-          <!--begin::Content-->
-          <div class="flex-row-fluid">
-            <!--begin::Form-->
-            <form class="form mx-auto" novalidate="novalidate" method="post"
-                  action="{% url 'settings:site' %}" enctype="multipart/form-data">
-              <!--begin::Group-->
-              <div class="mb-5">
-
-                <!--begin::Step 1-->
-                <div class="flex-column current" data-kt-stepper-element="content">
-                  {% csrf_token %}
-                  {% for field in form %}
-                    {% include 'forms/one_row_field.html' %}
-                  {% endfor %}
-                </div>
-                <!--end::Step 1-->
-
-                <!--begin::Step 2-->
-                <div class="flex-column" data-kt-stepper-element="content">
-                  {% for field in setting_form %}
-                    {% if field.label != 'Site' %}
-                      {% include 'forms/one_row_field.html' %}
-                    {% else %}
-                      <div class="d-none">
-                        {% include 'forms/one_row_field.html' %}
+                      <!--begin::Icon-->
+                      <div class="stepper-icon w-40px h-40px">
+                        <i class="stepper-check fas fa-check"></i>
+                        <span class="stepper-number">1</span>
                       </div>
-                    {% endif %}
+                      <!--end::Icon-->
 
-                  {% endfor %}
+                      <!--begin::Label-->
+                      <div class="stepper-label">
+                        <h3 class="stepper-title">
+                          {% translate 'General' %}
+                        </h3>
+
+                        <div class="stepper-desc">
+                          {% translate 'Name and Domain' %}
+                        </div>
+                      </div>
+                      <!--end::Label-->
+                    </div>
+                    <!--end::Step 1-->
+
+                    <!--begin::Step 2-->
+                    <div class="stepper-item me-5" data-kt-stepper-element="nav" data-kt-stepper-action="step">
+                      <!--begin::Line-->
+                      <div class="stepper-line w-40px"></div>
+                      <!--end::Line-->
+
+                      <!--begin::Icon-->
+                      <div class="stepper-icon w-40px h-40px">
+                        <i class="stepper-check fas fa-check"></i>
+                        <span class="stepper-number">2</span>
+                      </div>
+                      <!--begin::Icon-->
+
+                      <!--begin::Label-->
+                      <div class="stepper-label">
+                        <h3 class="stepper-title">
+                          {% translate 'Images' %}
+                        </h3>
+
+                        <div class="stepper-desc">
+                          {% translate 'Favicon, Logos' %}
+                        </div>
+                      </div>
+                      <!--end::Label-->
+                    </div>
+                    <!--end::Step 2-->
+
+                  </div>
+                  <!--end::Nav-->
                 </div>
-                <!--end::Step 2-->
 
-                <!--begin::Step 3-->
-                <div class="flex-column" data-kt-stepper-element="content">
-                  <ul class="nav nav-tabs nav-line-tabs nav-line-tabs-2x mb-5 fs-6">
-                    {% for allauth_template in allauth_templates %}
-                      <li class="nav-item">
-                        <a class="nav-link {% if forloop.first %}active{% endif %}"
-                           data-bs-toggle="tab" href="#allauth_template_{{ allauth_template.language }}">
-                          {{ allauth_template.label }}
-                        </a>
-                      </li>
-                    {% endfor %}
-                  </ul>
+                <!--begin::Content-->
+                <div class="flex-row-fluid">
+                  <!--begin::Form-->
+                  <form class="form mx-auto" novalidate="novalidate" method="post"
+                        action="{% url 'settings:site' %}" enctype="multipart/form-data">
+                    <!--begin::Group-->
+                    <div class="mb-5">
 
-                  <div class="tab-content" id="allauth_email_template_id">
-                    {% for allauth_template in allauth_templates %}
-                      <div class="tab-pane fade show {% if forloop.first %}active{% endif %}"
-                           id="allauth_template_{{ allauth_template.language }}" role="tabpanel">
-                        {% for template in allauth_template.data %}
-                          <div class="card shadow-sm">
-                            <div class="card-header">
-                              <h3 class="card-title">{% translate template.code %}</h3>
-                              <div class="card-toolbar">
-                                <button type="button" class="btn btn-sm btn-light">
-                                  Action
-                                </button>
-                              </div>
-                            </div>
-                            <div class="card-body">
-                              Lorem Ipsum is simply dummy text...
-                            </div>
-                          </div>
+                      <!--begin::Step 1-->
+                      <div class="flex-column current"
+                           data-kt-stepper-element="content">
+                        {% csrf_token %}
+                        {% for field in form %}
+                          {% include 'forms/one_row_field.html' %}
                         {% endfor %}
-
                       </div>
-                    {% endfor %}
-                  </div>
+                      <!--end::Step 1-->
 
-                </div>
-                <!--begin::Step 3-->
+                      <!--begin::Step 2-->
+                      <div class="flex-column" data-kt-stepper-element="content">
+                        {% for field in setting_form %}
+                          {% if field.label != 'Site' %}
+                            {% include 'forms/one_row_field.html' %}
+                          {% else %}
+                            <div class="d-none">
+                              {% include 'forms/one_row_field.html' %}
+                            </div>
+                          {% endif %}
 
-              </div>
-              <!--end::Group-->
+                        {% endfor %}
+                      </div>
+                      <!--end::Step 2-->
 
-              <!--begin::Actions-->
-              <div class="d-flex flex-stack">
-                <!--begin::Wrapper-->
-                <div class="me-2">
-                  <button type="button" class="btn btn-light btn-active-light-primary"
-                          data-kt-stepper-action="previous">
-                    {% translate 'Back' %}
-                  </button>
-                </div>
-                <!--end::Wrapper-->
-                <!--begin::Wrapper-->
-                <div>
-                  <button type="submit" class="btn btn-primary" data-kt-stepper-action="submit">
+                    </div>
+                    <!--end::Group-->
+
+                    <!--begin::Actions-->
+                    <div class="d-flex flex-stack">
+                      <!--begin::Wrapper-->
+                      <div class="me-2">
+                        <button type="button" class="btn btn-light btn-active-light-primary"
+                                data-kt-stepper-action="previous">
+                          {% translate 'Back' %}
+                        </button>
+                      </div>
+                      <!--end::Wrapper-->
+                      <!--begin::Wrapper-->
+                      <div>
+                        <button type="submit" class="btn btn-primary" data-kt-stepper-action="submit">
                       <span class="indicator-label">
                           {% translate 'Save Changes' %}
                       </span>
-                    <span class="indicator-progress">
+                          <span class="indicator-progress">
                         {% translate "Please wait" %}...
                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
                       </span>
-                  </button>
-                  <button type="button" class="btn btn-primary" data-kt-stepper-action="next">
-                    {% translate 'Continue' %}
-                  </button>
+                        </button>
+                        <button type="button" class="btn btn-primary" data-kt-stepper-action="next">
+                          {% translate 'Continue' %}
+                        </button>
+                      </div>
+                      <!--end::Wrapper-->
+                    </div>
+                    <!--end::Actions-->
+                  </form>
+                  <!--end::Form-->
                 </div>
-                <!--end::Wrapper-->
               </div>
-              <!--end::Actions-->
-            </form>
-            <!--end::Form-->
+              <!--end::Stepper-->
+            </div>
+            <!--end::Card body-->
           </div>
         </div>
-        <!--end::Stepper-->
       </div>
-      <!--end::Card body-->
+
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="accordion_site_setting_header_2">
+          <button class="accordion-button fs-4 fw-bold collapsed" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#accordion_site_setting_body_2" aria-expanded="false"
+                  aria-controls="accordion_site_setting_body_2">
+            {% translate 'Authenticate Email Templates' %}
+          </button>
+        </h2>
+        <div id="accordion_site_setting_body_2" class="accordion-collapse collapse"
+             aria-labelledby="accordion_site_setting_header_2"
+             data-bs-parent="#accordion_site_setting">
+          <div class="accordion-body">
+
+            <!--begin::Card body-->
+            <div class="card-body">
+              <!--begin::Stepper-->
+              <div class="stepper stepper-pills stepper-column d-flex flex-column flex-lg-row"
+                   id="allauth_template_vertical">
+                <!--begin::Aside-->
+                <div class="d-flex flex-row-auto w-100 w-lg-300px">
+                  <!--begin::Nav-->
+                  <div class="stepper-nav flex-cente">
+                    {% for allauth_template in allauth_templates %}
+                      <!--begin::Step-->
+                      <div class="stepper-item me-5 {% if forloop.first %}current{% endif %}"
+                           data-kt-stepper-element="nav"
+                           data-kt-stepper-action="step">
+                        <!--begin::Line-->
+                        <div class="stepper-line w-40px"></div>
+                        <!--end::Line-->
+
+                        <!--begin::Icon-->
+                        <div class="stepper-icon w-40px h-40px">
+                          <i class="stepper-check fas fa-check"></i>
+                          <span class="stepper-number">{{ forloop.counter }}</span>
+                        </div>
+                        <!--end::Icon-->
+
+                        <!--begin::Label-->
+                        <div class="stepper-label">
+                          <h3 class="stepper-title">
+                            {% translate allauth_template.code %}
+                          </h3>
+
+                          <div class="stepper-desc">
+                            {{ allauth_template.language_verbose }}
+                          </div>
+                        </div>
+                        <!--end::Label-->
+                      </div>
+                      <!--end::Step-->
+                    {% endfor %}
+
+                  </div>
+                  <!--end::Nav-->
+                </div>
+
+                <!--begin::Content-->
+                <div class="flex-row-fluid">
+                  {% for allauth_template in allauth_templates %}
+                    <!--begin::Step-->
+                    <div class="flex-column {% if forloop.first %}current{% endif %}" data-kt-stepper-element="content">
+                      {% include "forms/one-col-side-form.html" with form=allauth_template.update_form %}
+                    </div>
+                    <!--end::Step-->
+                  {% endfor %}
+                </div>
+              </div>
+              <!--end::Stepper-->
+            </div>
+            <!--end::Card body-->
+          </div>
+        </div>
+      </div>
+
     </div>
-    <!--end::Card-->
+    <!--end::Accordion-->
+
   </div>
   <!--end::Content-->
 {% endblock content %}
@@ -242,6 +268,18 @@
     stepper.on("kt.stepper.previous", function (stepper) {
       stepper.goPrevious(); // go previous step
     });
+
+    // Stepper lement
+    var auth_element = document.querySelector("#allauth_template_vertical");
+
+    // Initialize Stepper
+    var auth_stepper = new KTStepper(auth_element);
+
+    // Handle navigation click
+    auth_stepper.on("kt.stepper.click", function (auth_stepper) {
+      auth_stepper.goTo(auth_stepper.getClickedStepIndex()); // go to clicked step
+    });
+
   </script>
 {% endblock inline_javascript %}
 <!--end::Javascript-->
